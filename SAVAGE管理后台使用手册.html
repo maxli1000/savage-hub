@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAVAGE 运营平台 - 管理后台使用手册</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #2563eb;
+      --primary-light: #eff6ff;
+      --sidebar-bg: #0f172a;
+      --sidebar-hover: #1e293b;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #f8fafc;
+      --card-bg: #fff;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+      --success: #22c55e;
+      --success-light: #f0fdf4;
+      --warning: #f59e0b;
+      --warning-light: #fffbeb;
+      --danger: #ef4444;
+      --danger-light: #fef2f2;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.7;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background: var(--sidebar-bg);
+      color: #cbd5e1;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+      transition: transform 0.3s;
+    }
+    .sidebar-header {
+      padding: 24px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .sidebar-header h1 {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .sidebar-header p {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+    .nav-group {
+      padding: 8px 0;
+    }
+    .nav-group-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #64748b;
+      padding: 12px 20px 6px;
+      font-weight: 600;
+    }
+    .nav-item {
+      display: block;
+      padding: 10px 20px 10px 28px;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 14px;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+    .nav-item:hover {
+      background: var(--sidebar-hover);
+      color: #fff;
+    }
+    .nav-item.active {
+      background: rgba(37,99,235,0.12);
+      color: #60a5fa;
+      border-left-color: var(--primary);
+    }
+
+    /* Main content */
+    .main {
+      margin-left: 280px;
+      flex: 1;
+      max-width: calc(100% - 280px);
+    }
+
+    /* Mobile toggle */
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 200;
+      background: var(--sidebar-bg);
+      color: #fff;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    /* Content sections */
+    .section {
+      padding: 48px 40px;
+      max-width: 960px;
+    }
+    .section + .section {
+      border-top: 1px solid var(--border);
+    }
+    .section-header {
+      margin-bottom: 28px;
+    }
+    .section-header h2 {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-header .icon {
+      width: 36px;
+      height: 36px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+      color: #fff;
+      padding: 60px 40px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 40px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+    .hero p {
+      font-size: 17px;
+      color: #94a3b8;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .hero .meta {
+      margin-top: 24px;
+      display: inline-flex;
+      gap: 24px;
+      font-size: 13px;
+      color: #64748b;
+    }
+    .hero .meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .card-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-header h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .card-header .tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    .tag-new { background: var(--success-light); color: var(--success); }
+    .tag-urgent { background: var(--danger-light); color: var(--danger); }
+    .tag-daily { background: var(--primary-light); color: var(--primary); }
+    .tag-warn { background: var(--warning-light); color: var(--warning); }
+    .card-body {
+      padding: 24px;
+    }
+    .card-body p {
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .card-body ul, .card-body ol {
+      padding-left: 20px;
+      color: var(--text-muted);
+    }
+    .card-body li {
+      margin-bottom: 8px;
+    }
+
+    /* Screenshot */
+    .screenshot {
+      margin: 20px 0;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      border: 1px solid var(--border);
+    }
+    .screenshot img {
+      width: 100%;
+      display: block;
+    }
+    .screenshot-caption {
+      background: var(--bg);
+      padding: 10px 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Steps */
+    .steps {
+      counter-reset: step;
+    }
+    .step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px dashed var(--border);
+    }
+    .step:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .step-num {
+      width: 32px;
+      height: 32px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .step-body h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .step-body p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Tips */
+    .tip {
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+      font-size: 14px;
+      color: var(--text-main);
+    }
+    .tip-success {
+      background: var(--success-light);
+      border-left-color: var(--success);
+    }
+    .tip-warning {
+      background: var(--warning-light);
+      border-left-color: var(--warning);
+    }
+    .tip-danger {
+      background: var(--danger-light);
+      border-left-color: var(--danger);
+    }
+    .tip strong {
+      color: var(--primary);
+    }
+    .tip-success strong { color: var(--success); }
+    .tip-warning strong { color: var(--warning); }
+    .tip-danger strong { color: var(--danger); }
+
+    /* Table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-top: 12px;
+    }
+    .data-table th, .data-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table th {
+      background: var(--bg);
+      font-weight: 600;
+      color: var(--text-main);
+      font-size: 13px;
+    }
+    .data-table td {
+      color: var(--text-muted);
+    }
+    .data-table tr:hover td {
+      background: var(--bg);
+    }
+
+    /* Scenario list */
+    .scenario-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .scenario-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      background: var(--card-bg);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .scenario-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    .scenario-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .scenario-text h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .scenario-text p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Path breadcrumb */
+    .path {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .path strong {
+      color: var(--text-main);
+    }
+    .path span {
+      color: var(--border);
+    }
+
+    /* Approval flow box */
+    .approval-flow {
+      background: #fafafa;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .approval-flow-title {
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .approval-step {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .approval-arrow {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; max-width: 100%; }
+      .menu-toggle { display: block; }
+      .section { padding: 32px 20px; }
+      .hero h1 { font-size: 28px; }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    /* Anchor offset */
+    .anchor {
+      display: block;
+      position: relative;
+      top: -20px;
+      visibility: hidden;
+    }
+
+    /* Search bar */
+    .search-bar {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .search-wrap {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+    }
+    .search-input {
+      flex: 1;
+      padding: 10px 16px 10px 40px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 15px;
+      background: var(--bg);
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+      background: #fff;
+    }
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 16px;
+      pointer-events: none;
+    }
+    .search-clear {
+      position: absolute;
+      right: 110px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 4px;
+      display: none;
+    }
+    .search-clear:hover { color: var(--text-main); }
+    .search-nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .search-nav button {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--text-main);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .search-nav button:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .search-nav button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .search-count {
+      min-width: 40px;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+    .search-nav .no-match {
+      color: var(--danger);
+      font-weight: 500;
+    }
+
+    /* Highlight */
+    .search-highlight {
+      background: linear-gradient(120deg, #fde047 0%, #fde047 100%);
+      background-repeat: no-repeat;
+      background-size: 100% 40%;
+      background-position: 0 88%;
+      color: var(--text-main);
+      font-weight: 600;
+      border-radius: 2px;
+      padding: 0 2px;
+    }
+    .search-highlight.active {
+      background: linear-gradient(120deg, #f59e0b 0%, #f59e0b 100%);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: 0 0;
+      color: #fff;
+    }
+
+    /* Dim unmatched sections during search */
+    body.is-searching .section {
+      opacity: 0.35;
+      transition: opacity 0.2s;
+    }
+    body.is-searching .section.has-match {
+      opacity: 1;
+    }
+
+    @media (max-width: 900px) {
+      .search-bar { padding: 12px 20px; }
+      .search-wrap { max-width: 100%; }
+      .search-clear { right: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <h1>📋 SAVAGE 运营平台</h1>
+    <p>管理后台使用手册（业务流程版）</p>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">日常运营</div>
+    <a class="nav-item active" href="#daily-dashboard">如何查看每日经营数据</a>
+    <a class="nav-item" href="#daily-orders">如何处理订单与退款</a>
+    <a class="nav-item" href="#daily-invoice">如何处理发票申请</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">用户管理</div>
+    <a class="nav-item" href="#cs-user">如何查询与管理用户</a>
+    <a class="nav-item" href="#cs-ban">如何封禁/解封用户</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">课程管理</div>
+    <a class="nav-item" href="#course-create">如何新建一门课程</a>
+    <a class="nav-item" href="#course-schedule">如何进行排课</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">门店管理</div>
+    <a class="nav-item" href="#store-new">如何新增一家门店</a>
+    <a class="nav-item" href="#store-room">如何配置教室</a>
+    <a class="nav-item" href="#store-door">如何管理门禁设备</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">教练管理</div>
+    <a class="nav-item" href="#coach-add">如何添加新教练</a>
+    <a class="nav-item" href="#coach-pay">如何配置教练薪酬</a>
+    <a class="nav-item" href="#coach-schedule">如何处理教练日程报备</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">卡券营销</div>
+    <a class="nav-item" href="#card-recharge">如何创建储值卡</a>
+    <a class="nav-item" href="#card-times">如何创建次卡产品</a>
+    <a class="nav-item" href="#card-coupon">如何创建优惠券</a>
+    <a class="nav-item" href="#card-member">如何发放会籍卡</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">内容运营</div>
+    <a class="nav-item" href="#op-banner">如何配置运营位</a>
+    <a class="nav-item" href="#op-agreement">如何更新用户协议</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">财务管理</div>
+    <a class="nav-item" href="#finance-report">如何查看教练课时费与报表</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">系统设置</div>
+    <a class="nav-item" href="#sys-account">如何配置账号权限与日志</a>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main class="main">
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1>SAVAGE 运营平台</h1>
+    <p>管理后台使用手册 — 按实际工作场景编写，快速找到「我要怎么做」</p>
+    <div class="meta">
+      <span>📅 2026-06-05</span>
+      <span>📄 共 18 个业务场景</span>
+      <span>🖼️ 图文结合</span>
+    </div>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索手册内容，例如「退款」「排课」「审批」…" autocomplete="off">
+      <button class="search-clear" id="searchClear" title="清空">×</button>
+      <div class="search-nav" id="searchNav" style="display:none;">
+        <span class="search-count" id="searchCount">0 / 0</span>
+        <button id="searchPrev" title="上一个 (↑)">↑</button>
+        <button id="searchNext" title="下一个 (↓)">↓</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Intro -->
+  <span class="anchor" id="intro"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">📖</span> 手册说明</h2>
+      <p>本手册按照实际工作场景组织，每个场景包含：操作路径、分步指引、截图示例、注意事项。所有涉及资金/用户资产的操作均设有审批流，确保可追溯、安全可控。</p>
+    </div>
+
+    <div class="scenario-list">
+      <a class="scenario-item" href="#daily-dashboard">
+        <div class="scenario-icon" style="background:#eff6ff;">📊</div>
+        <div class="scenario-text"><h4>查看每日经营数据</h4><p>每天上班第一件事，快速掌握营收、约课、场地使用情况</p></div>
+      </a>
+      <a class="scenario-item" href="#cs-user">
+        <div class="scenario-icon" style="background:#f0fdf4;">👤</div>
+        <div class="scenario-text"><h4>查询与管理用户</h4><p>客户来电/投诉时，快速查询资料、资产、订单，管理标签与备注</p></div>
+      </a>
+      <a class="scenario-item" href="#daily-orders">
+        <div class="scenario-icon" style="background:#fffbeb;">📝</div>
+        <div class="scenario-text"><h4>处理订单与退款</h4><p>查询订单详情、处理退款申请、执行用户补偿</p></div>
+      </a>
+      <a class="scenario-item" href="#course-create">
+        <div class="scenario-icon" style="background:#fef2f2;">🏋️</div>
+        <div class="scenario-text"><h4>新建一门课程</h4><p>从小程序分类、类目、排课条目到排课的完整闭环流程</p></div>
+      </a>
+      <a class="scenario-item" href="#store-new">
+        <div class="scenario-icon" style="background:#f5f3ff;">🏢</div>
+        <div class="scenario-text"><h4>新增一家门店</h4><p>新门店开业前的系统配置：门店信息、教室、门禁、公告</p></div>
+      </a>
+      <a class="scenario-item" href="#card-recharge">
+        <div class="scenario-icon" style="background:#ecfeff;">🎫</div>
+        <div class="scenario-text"><h4>创建卡券产品</h4><p>储值卡、次卡、优惠券、会籍卡的创建、发放、延期与冻结</p></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ==================== 日常运营 ==================== -->
+  <span class="anchor" id="daily-dashboard"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">📊</span> 如何查看每日经营数据</h2>
+      <p>适用于：每日晨会前、每周复盘时，快速掌握门店经营全貌。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>首页</strong> <span>→</span> <strong>数据概况</strong> <span>→</span> <strong>老板驾驶舱 / 运营中心</strong></div>
+
+    <div class="card">
+      <div class="card-header"><span class="tag tag-daily">每日必看</span><h3>Step 1：打开老板驾驶舱</h3></div>
+      <div class="card-body">
+        <p>登录后台后，默认进入<strong>老板驾驶舱</strong>页面。顶部的数据卡分别展示：</p>
+        <ul>
+          <li><strong>今日营收</strong>：当日总收入及环比变化（绿色 ↑ 表示增长）</li>
+          <li><strong>活跃用户</strong>：当日活跃用户数及本月新增人数</li>
+          <li><strong>课程完成率</strong>：已完课数 ÷ 总排课数，及与行业平均的对比</li>
+          <li><strong>会员续费</strong>：会员续费率及月度变化</li>
+        </ul>
+        <p style="margin-top:10px;">下方图表区域可切换查看「<strong>7天 / 30天 / 90天</strong>」营收趋势，右侧展示<strong>门店营收排名</strong>（按今日营收降序排列），快速定位业绩最好与最差的门店。</p>
+        <div class="tip"><strong>提示：</strong>点击「导出报表」可将数据导出为 Excel；点击「大屏展示」可切换至全屏看板模式，适合会议室投影。</div>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/01-老板驾驶舱.png" alt="老板驾驶舱">
+      <div class="screenshot-caption">图 1-1：老板驾驶舱 — 核心经营指标一览</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="tag tag-daily">每日必看</span><h3>Step 2：切换至运营中心</h3></div>
+      <div class="card-body">
+        <p>在数据概况 Tab 中切换到<strong>运营中心</strong>，关注运营维度的数据：</p>
+        <ul>
+          <li><strong>今日约课</strong>：已约课节数，下方标注「待履约 XX 节」，判断今日课程饱和度</li>
+          <li><strong>在职教练</strong>：当前在职教练人数，确认排课人力是否充足</li>
+          <li><strong>场地使用率</strong>：已排课时段占可用时段的比例，低于 60% 需考虑促销</li>
+          <li><strong>用户满意度</strong>：本月用户评分平均分，低于 4.5 需排查服务问题</li>
+          <li><strong>课程数据分析</strong>：按团体课/私教课/训练营查看排课、完成、取消、营收数据</li>
+          <li><strong>教练排行榜</strong>：本月营收 TOP5 教练，展示教练评分、完成率及营收金额，用于激励与绩效沟通</li>
+        </ul>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/02-运营中心.png" alt="运营中心">
+      <div class="screenshot-caption">图 1-2：运营中心 — 日常运营数据监控</div>
+    </div>
+
+    <div class="tip tip-success"><strong>最佳实践：</strong>建议每日 9:00 前查看运营中心，重点关注「今日待履约」和「异常待处理」模块，提前安排应对。</div>
+  </section>
+
+  <span class="anchor" id="daily-orders"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">📝</span> 如何处理订单与退款</h2>
+      <p>适用于：客户来电查询订单、申请退款时的处理流程。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>订单管理</strong> <span>→</span> <strong>全部订单</strong> <span>→</span> <strong>搜索订单 / 处理退款</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 1：搜索目标订单</h3></div>
+      <div class="card-body">
+        <p>进入「订单管理」→「全部订单」，可通过以下任一方式定位订单：</p>
+        <ul>
+          <li>输入<strong>订单号</strong>（系统内部编号，如 T26052...）</li>
+          <li>输入<strong>支付订单号</strong>（第三方支付流水号）</li>
+          <li>输入<strong>用户手机号</strong>查找该用户的全部订单</li>
+          <li>按<strong>订单类型</strong>（团课 / 会籍卡 / 次卡 / 储值卡）、<strong>支付状态</strong>、<strong>时间范围</strong>筛选</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 2：识别订单关键信息</h3></div>
+      <div class="card-body">
+        <p>在订单列表中，重点关注以下字段：</p>
+        <table class="data-table">
+          <tr><th>字段</th><th>说明</th><th>处理参考</th></tr>
+          <tr><td>订单类型</td><td>团课 / 会籍卡 / 次卡 / 储值卡</td><td>不同类型退款规则不同</td></tr>
+          <tr><td>商品信息</td><td>购买的课程/卡券名称与数量</td><td>核对客户描述是否一致</td></tr>
+          <tr><td>实付金额</td><td>用户实际支付金额</td><td>退款金额以此为上限</td></tr>
+          <tr><td>状态</td><td>已完成 / 已取消 / 退款中</td><td>「已完成」才可发起退款</td></tr>
+          <tr><td>支付方式</td><td>现金支付 / 微信支付 / 支付宝 / 余额</td><td>原路退回</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/06-订单管理.png" alt="订单管理">
+      <div class="screenshot-caption">图 2-1：订单管理列表页</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 3：查看订单详情</h3></div>
+      <div class="card-body">
+        <p>点击订单编号进入详情页，可查看：</p>
+        <ul>
+          <li><strong>订单信息</strong>：订单编号、订单类型、订单状态、创建时间</li>
+          <li><strong>支付信息</strong>：支付时间、支付渠道、支付流水号</li>
+          <li><strong>用户信息</strong>：用户昵称、用户ID、手机号</li>
+          <li><strong>订单金额明细</strong>：结算明细ID、抵扣类型（现金/优惠券/资产）、优惠券作用范围、资产ID、抵扣金额、抵扣数量</li>
+          <li><strong>订单商品明细</strong>：商品名称、子订单号、件数、单价、小计</li>
+          <li><strong>核销记录</strong>：课程签到/开卡/使用记录</li>
+          <li><strong>退款记录</strong>：历史退款申请及处理结果</li>
+        </ul>
+        <p style="margin-top:10px;">在订单商品明细区域，可根据情况执行以下操作：</p>
+        <ul>
+          <li><strong>订单补差</strong>：当订单金额需要调整时使用</li>
+          <li><strong>会籍卡退款</strong>：针对会籍卡类订单的专项退款入口</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="tag tag-urgent">涉及资金</span><h3>Step 4：处理退款申请</h3></div>
+      <div class="card-body">
+        <p>筛选「退款中」状态的订单，点击进入详情页处理：</p>
+        <ol>
+          <li>查看退款明细（退款金额、支付方式、退款原因）</li>
+          <li>点击「<strong>同意退款</strong>」或「<strong>驳回</strong>」</li>
+          <li>同意后款项原路退回（微信退微信、余额退余额、次卡按规则返还）</li>
+          <li>驳回需填写驳回原因</li>
+        </ol>
+        <div class="approval-flow">
+          <div class="approval-flow-title">🔒 资产类退款审批流</div>
+          <div class="approval-step">客服提交 <span class="approval-arrow">→</span> 客服主管审批 <span class="approval-arrow">→</span> 财务确认 <span class="approval-arrow">→</span> 执行退款</div>
+          <p style="margin-top:8px; font-size:13px;">涉及次卡、会籍卡等资产退款，必须走完上述审批流，系统自动记录操作日志。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 5：用户补偿（客服快速发卡）</h3></div>
+      <div class="card-body">
+        <p>对于需要补偿的用户，可通过客服快速发卡进行补贴：</p>
+        <ol>
+          <li>找到需要补偿的用户</li>
+          <li>选择「客服快速发卡」功能</li>
+          <li>选择卡券类型和数量，提交后即时到账</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="tip tip-warning"><strong>注意事项：</strong>已核销的课程订单（用户已上课）原则上不支持退款；储值卡退款需扣除已消费金额及赠送金部分。所有退款操作均记录操作日志，不可删除。</div>
+  </section>
+
+  <span class="anchor" id="daily-invoice"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">🧾</span> 如何处理发票申请</h2>
+      <p>适用于：客户提交发票申请后，财务/运营人员进行开票或驳回。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>发票管理</strong> <span>→</span> <strong>开票申请</strong> <span>→</span> <strong>处理 / 上传发票</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 1：查看待处理的发票申请</h3></div>
+      <div class="card-body">
+        <p>进入「发票管理」→「开票申请」，列表显示所有用户提交的申请。可按以下条件筛选：</p>
+        <ul>
+          <li><strong>处理状态</strong>：待处理 / 已开票 / 已驳回 / 待开票</li>
+          <li><strong>订单号</strong>：输入关联订单号精确搜索</li>
+          <li><strong>全部类型</strong>：按发票类型筛选</li>
+          <li><strong>申请时间</strong>：按时间范围筛选</li>
+        </ul>
+        <p style="margin-top:10px;">列表中重点关注以下字段：</p>
+        <table class="data-table">
+          <tr><th>字段</th><th>说明</th></tr>
+          <tr><td>抬头类型</td><td>个人 / 企业</td></tr>
+          <tr><td>发票抬头 / 企业税号</td><td>开票信息，需仔细核对</td></tr>
+          <tr><td>处理状态</td><td>待处理 / 已开票 / 已驳回 / 待开票</td></tr>
+          <tr><td>驳回原因</td><td>被驳回时显示具体原因，方便二次处理</td></tr>
+          <tr><td>操作</td><td>根据状态显示不同操作：「查看」「上传」「驳回」</td></tr>
+        </table>
+        <div class="tip"><strong>注意：</strong>仅「已完成」状态的订单才可开票；「已驳回」的申请需告知客户修改后重新提交。</div>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/25-发票管理.png" alt="发票管理">
+      <div class="screenshot-caption">图 3-1：发票管理 — 发票申请处理列表</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 2：处理开票申请</h3></div>
+      <div class="card-body">
+        <p>点击「处理」或列表中的「查看/上传/驳回」按钮，核对订单信息后操作：</p>
+        <ol>
+          <li><strong>信息无误可开票</strong>：在税务系统中开具电子发票 → 点击「上传发票」将 PDF/图片上传至系统 → 状态变为「已开票」</li>
+          <li><strong>信息有误或不符合开票条件</strong>：点击「驳回」→ 填写驳回原因（如「订单已全额退款」「税号错误」）→ 客户可在小程序中查看驳回原因并重新提交</li>
+        </ol>
+        <p style="margin-top:10px;"><strong>操作按钮差异：</strong></p>
+        <ul>
+          <li>「待处理」状态：显示「查看」「上传」「驳回」</li>
+          <li>「已开票」状态：显示「查看」（可重新下载发票）</li>
+          <li>「已驳回」状态：显示「查看」</li>
+        </ul>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/26-发票申请详情.png" alt="发票申请详情">
+      <div class="screenshot-caption">图 3-2：发票申请详情 — 申请信息与发票文件预览</div>
+    </div>
+
+    <div class="tip tip-success"><strong>最佳实践：</strong>建议每日下班前集中处理当日发票申请，避免积压。已开票的发票文件可在详情页随时下载复查。</div>
+  </section>
+
+  <!-- ==================== 用户管理 ==================== -->
+  <span class="anchor" id="cs-user"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">👤</span> 如何查询与管理用户</h2>
+      <p>适用于：客户来电/到店咨询、投诉处理、信息核实时。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>用户管理</strong> <span>→</span> <strong>搜索用户</strong> <span>→</span> <strong>查看详情 / 编辑标签 / 添加备注</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 1：搜索用户</h3></div>
+      <div class="card-body">
+        <p>进入「用户管理」页面，可通过以下任一方式定位用户：</p>
+        <ul>
+          <li><strong>昵称 / 手机号</strong>：支持模糊搜索</li>
+          <li><strong>会员等级</strong>：按等级筛选</li>
+          <li><strong>归属门店 / 教练</strong>：按服务归属筛选</li>
+          <li><strong>用户ID</strong>：客户提供的数字 ID</li>
+        </ul>
+        <p style="margin-top:10px;">用户列表中可直接查看「<strong>资产信息</strong>」概览列，显示该用户的储值余额、次卡剩余次数、优惠券张数，无需进入详情页即可快速了解用户资产状况。</p>
+        <div class="tip"><strong>提示：</strong>如果客户不记得用户ID，可通过手机号后四位模糊搜索。</div>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/03-用户列表.png" alt="用户列表">
+      <div class="screenshot-caption">图 4-1：用户列表 — 通过多维度条件搜索，列表可直接查看资产概览</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 2：查看用户详情</h3></div>
+      <div class="card-body">
+        <p>点击用户进入详情页，默认展示「基本信息」标签：</p>
+        <ul>
+          <li><strong>用户昵称、ID、性别、年龄、生日</strong>：基础身份信息</li>
+          <li><strong>注册时间</strong>：可判断用户是新客还是老客</li>
+          <li><strong>联系方式</strong>：完整手机号（点击眼睛图标可查看未脱敏号码）</li>
+          <li><strong>人脸识别</strong>：显示「已录入」或「未录入」</li>
+          <li><strong>地址信息</strong>：客户维护的收货地址列表</li>
+        </ul>
+        <p style="margin-top:10px;">用户详情页包含多个标签页：</p>
+        <table class="data-table">
+          <tr><th>标签页</th><th>用途</th><th>典型场景</th></tr>
+          <tr><td>基本信息</td><td>身份信息、联系方式</td><td>客户来电核实身份</td></tr>
+          <tr><td>资产管理</td><td>次卡、会籍卡、优惠券</td><td>客户询问「我还有几次课」</td></tr>
+          <tr><td>订单记录</td><td>全部历史订单</td><td>客户查询某笔消费</td></tr>
+          <tr><td>预约记录</td><td>全部课程预约</td><td>客户询问「我约了哪节课」</td></tr>
+          <tr><td>历史到店/签到</td><td>到店和签到记录</td><td>核实用户到店情况</td></tr>
+          <tr><td>封禁管理</td><td>账号封禁记录</td><td>排查账号异常</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/04-用户详情-基本信息.png" alt="用户详情-基本信息">
+      <div class="screenshot-caption">图 4-2：用户详情 — 基本信息页</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 3：查看用户资产</h3></div>
+      <div class="card-body">
+        <p>切换到「资产管理」标签，可看到该用户持有的全部资产：</p>
+        <table class="data-table">
+          <tr><th>资产类型</th><th>查看内容</th><th>支持操作</th></tr>
+          <tr><td>次卡</td><td>来源、账户编号、模板名称、总次数、可用次数</td><td>查看使用记录、延期</td></tr>
+          <tr><td>会籍卡</td><td>有效期、适用门店、权益内容</td><td>查看详情、延期、冻结/解冻</td></tr>
+          <tr><td>优惠券</td><td>优惠券名称、面额、有效期、使用条件</td><td>查看使用记录</td></tr>
+        </table>
+        <div class="tip"><strong>话术示例：</strong>「您好，查询到您目前持有「89元通用次卡包」1 张，总次数 1 次，剩余可用 1 次，有效期至 2026-12-31。」</div>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/05-用户详情-资产管理.png" alt="用户详情-资产管理">
+      <div class="screenshot-caption">图 4-3：用户详情 — 资产管理（次卡列表）</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 4：管理用户标签</h3></div>
+      <div class="card-body">
+        <p>在用户详情页点击「编辑标签」，可添加或修改标签（如「高活跃」「投诉用户」「VIP」）。</p>
+        <p style="margin-top:8px;"><strong>批量添加标签：</strong>在用户列表勾选多个用户后，点击「批量添加标签」，统一打标签，方便后续营销触达。</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 5：添加用户备注</h3></div>
+      <div class="card-body">
+        <p>在用户详情页可添加备注，记录特殊需求或沟通历史（如「对花生过敏」「偏好早晨课程」），方便后续客服跟进。</p>
+      </div>
+    </div>
+  </section>
+
+  <span class="anchor" id="cs-ban"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">🚫</span> 如何封禁/解封用户</h2>
+      <p>适用于：用户存在恶意占课、刷单、骚扰教练等严重违规行为时。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>用户管理</strong> <span>→</span> <strong>搜索用户</strong> <span>→</span> <strong>查看详情</strong> <span>→</span> <strong>封禁管理</strong></div>
+
+    <div class="card">
+      <div class="card-header"><span class="tag tag-urgent">谨慎操作</span><h3>封禁操作流程</h3></div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h4>确认违规事实</h4>
+              <p>收集用户违规证据（订单记录、客服聊天记录、教练反馈等），确保封禁有据可依。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h4>进入用户封禁管理页</h4>
+              <p>在用户详情页切换到「封禁管理」标签，查看该用户是否有历史封禁记录。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h4>执行封禁操作</h4>
+              <p>点击「封禁账号」→ 选择封禁原因 → 设置封禁时长（永久 / 临时）→ 确认操作。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <h4>通知用户（可选）</h4>
+              <p>对于非永久封禁，建议通过客服渠道告知用户封禁原因及解封时间。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>解封操作流程</h3></div>
+      <div class="card-body">
+        <p>在「封禁管理」页面找到已封禁记录，点击「解封」→ 填写解封原因 → 确认。解封后用户可立即恢复正常使用。</p>
+      </div>
+    </div>
+
+    <div class="tip tip-danger"><strong>重要提醒：</strong>封禁操作不可逆地影响用户体验，执行前必须获得主管审批。误封可能导致客户投诉及品牌损失。所有封禁/解封操作均记录操作日志。</div>
+  </section>
+
+  <!-- ==================== 课程管理 ==================== -->
+  <span class="anchor" id="course-create"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">🏋️</span> 如何新建一门课程</h2>
+      <p>适用于：引入新课程类型、新开门店需要独立课程体系时。完整流程：小程序分类 → 类目 → 排课条目 → 排课 → 审批发布。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>课程管理 → 团体课</strong> <span>→</span> <strong>小程序分类 → 类目管理 → 排课条目管理 → 排课管理</strong></div>
+
+    <div class="card">
+      <div class="card-header"><span class="tag tag-new">可选</span><h3>Step 1：新建小程序分类</h3></div>
+      <div class="card-body">
+        <p>小程序分类用于前端筛选栏展示，方便用户按分类查找课程。</p>
+        <ol>
+          <li>进入 <strong>课程管理 → 团体课 → 管理小程序分类</strong></li>
+          <li>点击「新增」，填写<strong>分类名称</strong>、<strong>排序值</strong></li>
+          <li>保存后状态为「草稿」，在列表页点击「启用」后小程序端即可看到该分类</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="tag tag-daily">必选</span><h3>Step 2：新建课程类目</h3></div>
+      <div class="card-body">
+        <p>类目用于课程归类，是创建排课条目的前提。</p>
+        <ol>
+          <li>进入 <strong>课程管理 → 团体课 → 类目管理</strong>，点击「新增类目」</li>
+          <li>填写<strong>类目名称</strong>、<strong>排序</strong>（数字越小排序越靠前）</li>
+          <li><strong>关联至少一个小程序分类</strong>（否则无法创建）</li>
+          <li>添加标签（如「燃脂」「拉伸」），点击「确认创建」，默认状态为「草稿」</li>
+          <li>在列表页点击「启用」，类目状态更新为「启用」，小程序端显示</li>
+        </ol>
+        <p style="margin-top:10px;">列表支持按「<strong>类目ID</strong>」「<strong>类目名称</strong>」「<strong>状态</strong>」筛选搜索。每条类目可执行「<strong>查看</strong>」「<strong>编辑</strong>」「<strong>删除</strong>」操作，删除前需确认无关联的排课条目。</p>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/07-类目管理.png" alt="类目管理">
+      <div class="screenshot-caption">图 5-1：类目管理 — 课程分类配置</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 3：新建排课条目</h3></div>
+      <div class="card-body">
+        <p>进入 <strong>课程管理 → 团体课 → 排课条目管理</strong>，点击「新建排课条目」：</p>
+        <table class="data-table">
+          <tr><th>字段</th><th>填写建议</th><th>是否必填</th></tr>
+          <tr><td>课程名称</td><td>清晰易懂，同类型下不可重复</td><td>必填</td></tr>
+          <tr><td>课程类型</td><td>常规课 / 活动课 / 体验课 / 企业课</td><td>必填</td></tr>
+          <tr><td>课程类目</td><td>选择 Step 2 中创建的类目</td><td>必填</td></tr>
+          <tr><td>课程标签</td><td>如「燃脂」「拉伸」「单车」等，用于前端筛选展示</td><td>可选</td></tr>
+          <tr><td>时长</td><td>单节课时长（分钟），如 60 分钟</td><td>必填</td></tr>
+          <tr><td>最小人数 / 建议容量</td><td>如「最少1人 / 建议5人」</td><td>必填</td></tr>
+          <tr><td>价格</td><td>课程单价，如 ¥109.00</td><td>必填</td></tr>
+          <tr><td>按教室配置容量</td><td>选择门店和教室，分别设置容量上限</td><td>可选</td></tr>
+          <tr><td>媒体模板</td><td>课程图片、视频、介绍（需提前创建）</td><td>可选</td></tr>
+        </table>
+        <p style="margin-top:10px;">排课条目列表支持按「<strong>课程ID</strong>」「<strong>课程名称</strong>」「<strong>课程类型</strong>」「<strong>状态</strong>」筛选搜索。每条条目可执行「<strong>查看</strong>」「<strong>编辑</strong>」「<strong>删除</strong>」操作。</p>
+        <div class="tip"><strong>提示：</strong>排课条目是后续排课的基础，务必确认类目关联正确，否则会导致小程序端无法筛选到该课程。</div>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/09-排课条目管理.png" alt="排课条目管理">
+      <div class="screenshot-caption">图 5-2：排课条目管理 — 课程基础属性配置</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="tag tag-daily">必选</span><h3>Step 4：新建媒体模板</h3></div>
+      <div class="card-body">
+        <p>进入 <strong>课程管理 → 媒体模板管理</strong>，点击「新建媒体模板」：</p>
+        <ol>
+          <li>选择所属类目（Step 2 中创建的类目）</li>
+          <li>上传<strong>课程图片</strong>（列表封面、详情页头图）</li>
+          <li>上传<strong>课程视频</strong>（可选，用于详情页展示）</li>
+          <li>填写<strong>课程介绍</strong>（支持图文混排，详细介绍课程内容、适合人群、注意事项）</li>
+          <li>设置是否为「默认」模板（同一类目下可设置一个默认模板）</li>
+        </ol>
+        <p style="margin-top:10px;">媒体模板列表采用<strong>分组折叠</strong>方式展示，按「排课条目/媒体名称」分组，每组下展示该条目关联的全部媒体。支持「<strong>全部展开</strong>」和「<strong>全部收起</strong>」快速切换视图。列表支持按「<strong>模板ID</strong>」「<strong>模板名称</strong>」「<strong>状态</strong>」筛选搜索。</p>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/08-媒体模板管理.png" alt="媒体模板管理">
+      <div class="screenshot-caption">图 5-3：媒体模板管理 — 课程内容素材配置（分组折叠展示）</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 5：启用排课条目</h3></div>
+      <div class="card-body">
+        <p>在排课条目列表页，找到该课程，点击「启用」。状态变为「启用」后，该课程即可用于排课。</p>
+        <p style="margin-top:8px;">如需在小程序端展示给用户浏览，还需完成后续排课和审批步骤。</p>
+      </div>
+    </div>
+
+    <div class="tip tip-success"><strong>完成检查：</strong>启用后务必确认：1）类目已启用；2）小程序分类已启用；3）排课条目已启用；4）关联的媒体模板状态正常。</div>
+  </section>
+
+  <span class="anchor" id="course-schedule"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">📅</span> 如何进行排课</h2>
+      <p>适用于：每周固定排课、临时加课、节假日调课等场景。创建后需审批通过才可在前端展示。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>课程管理 → 团体课 → 排课管理 → 列表视图</strong> <span>→</span> <strong>新建排课</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>排课前准备</h3></div>
+      <div class="card-body">
+        <p>排课前请确认以下信息已配置完成：</p>
+        <ul>
+          <li>✅ 排课条目已创建且状态为「启用」（见「如何新建一门课程」）</li>
+          <li>✅ 目标门店和教室已配置</li>
+          <li>✅ 授课教练已录入系统且状态为「在职」</li>
+          <li>✅ 教练已在「日程报备」中标记该时段为「可排课」</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>排课操作步骤</h3></div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h4>选择排课条目</h4>
+              <p>在排课管理页面点击「新建排课」，选择已启用的排课条目。系统自动带入容量和价格。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h4>设置时间与地点</h4>
+              <p>选择上课日期、开始时间、结束时间；选择门店和教室。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h4>分配教练</h4>
+              <p>从教练列表中选择授课教练。系统会自动检查教练该时段是否有冲突（已有排课或已报备不可用）。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <h4>确认并创建</h4>
+              <p>确认信息无误后点击「确认创建」，课表默认状态为「草稿」。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-body">
+              <h4>提交审批并发布</h4>
+              <p>点击「提交团课排课发布审批」，审批通过后课程即时在小程序端展示，用户可进行浏览和预约。</p>
+            </div>
+          </div>
+        </div>
+        <div class="approval-flow">
+          <div class="approval-flow-title">🔒 排课发布审批流</div>
+          <div class="approval-step">运营提交 <span class="approval-arrow">→</span> 运营主管审批 <span class="approval-arrow">→</span> 审批通过后前端展示</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip tip-warning"><strong>注意事项：</strong>已有人预约的课程不可随意取消或修改时间，如需调整需提前通知已预约用户并协助改签。审批通过后的排课才会对用户可见。</div>
+  </section>
+
+  <!-- ==================== 门店管理 ==================== -->
+  <span class="anchor" id="store-new"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">🏢</span> 如何新增一家门店</h2>
+      <p>适用于：新门店开业前，在系统中完成基础信息录入。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>门店管理</strong> <span>→</span> <strong>门店列表</strong> <span>→</span> <strong>新增门店</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 1：填写门店基础信息</h3></div>
+      <div class="card-body">
+        <p>点击「新增门店」，填写以下信息：</p>
+        <table class="data-table">
+          <tr><th>字段</th><th>填写说明</th></tr>
+          <tr><td>门店编码</td><td>唯一标识，建议按「城市缩写-区域-序号」规则，如 BJS-CHAOY-031</td></tr>
+          <tr><td>门店名称</td><td>品牌门店名称，如「北京视频测试门店」</td></tr>
+          <tr><td>城市/区域</td><td>所属城市与行政区</td></tr>
+          <tr><td>详细地址</td><td>完整地址，用于导航和配送</td></tr>
+          <tr><td>联系电话 / 营业时间</td><td>门店客服电话与每日营业时间</td></tr>
+          <tr><td>容量</td><td>门店最大容纳人数</td></tr>
+          <tr><td>评分</td><td>初始评分，开业前可设为系统默认值</td></tr>
+          <tr><td>展示状态</td><td>营业中 / 装修中 / 已关闭（新门店先选「装修中」）</td></tr>
+          <tr><td>门店负责人</td><td>指定门店负责人，用于接收投诉报修工单</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/10-门店列表.png" alt="门店列表">
+      <div class="screenshot-caption">图 6-1：门店列表 — 全部门店信息一览</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 2：发布门店公告（可选）</h3></div>
+      <div class="card-body">
+        <p>在门店详情页可发布临时公告（如闭店通知、装修通知、活动预告），公告会同步到用户端小程序门店详情页。</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 3：配置门店关联信息</h3></div>
+      <div class="card-body">
+        <p>门店创建完成后，还需要配置以下内容（详见后续章节）：</p>
+        <ul>
+          <li>🏠 <strong>教室</strong>：为该门店添加教室（见「如何配置教室」）</li>
+          <li>🚪 <strong>门禁</strong>：为门店各出入口配置门禁设备（见「如何管理门禁设备」）</li>
+          <li>👨‍🏫 <strong>教练</strong>：将门店关联的教练设置所属城市区域</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 4：处理投诉报修</h3></div>
+      <div class="card-body">
+        <p>用户或客服提交的门店相关投诉/报修，会生成工单流转至门店负责人：</p>
+        <ol>
+          <li>工单自动分配给门店负责人</li>
+          <li>负责人处理后可更新工单状态并填写处理结果</li>
+          <li>处理进度实时同步给提交人（客服/用户）</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="tip tip-success"><strong>开业流程：</strong>装修中 → 完成教室/门禁/教练配置 → 上传课程排期 → 将门店状态改为「营业中」→ 小程序端即可预约。</div>
+  </section>
+
+  <span class="anchor" id="store-room"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">🏠</span> 如何配置教室</h2>
+      <p>适用于：新门店开业、现有门店改造新增教室时。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>门店管理</strong> <span>→</span> <strong>教室管理</strong> <span>→</span> <strong>新建教室</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>新建教室步骤</h3></div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h4>选择所属门店</h4>
+              <p>从下拉菜单中选择教室归属的门店。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h4>填写教室名称</h4>
+              <p>如「团课教室A」「私教室1」，限 20 字以内，建议统一命名规范。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h4>设置容纳人数与面积</h4>
+              <p>容纳人数决定课程最大容量上限；面积用于门店信息展示。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <h4>选择教室类型</h4>
+              <p>团课教室 / 私教室 / 功能室等，不同类型影响可选的课程类型。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-body">
+              <h4>配置设施设备</h4>
+              <p>勾选教室内已有的设施（音响系统、镜面墙、空调、LED屏、地板、瑜伽垫、动感单车、器械设备、哑铃架、壶铃、弹力带、拉伸区等）。如预设选项不满足，可在底部「<strong>输入自定义设施名称，按回车添加</strong>」中自行补充。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-body">
+              <h4>填写教室描述</h4>
+              <p>选填，0-300字，用于介绍教室特色或适用课程类型，帮助用户了解教室环境。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">7</div>
+            <div class="step-body">
+              <h4>上传教室图片</h4>
+              <p><strong>必填</strong>，上传教室实拍图，用于小程序端门店详情展示。建议上传高清实景图，提升用户预约意愿。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/11-新建教室.png" alt="新建教室">
+      <div class="screenshot-caption">图 7-1：新建教室 — 教室信息录入表单（含自定义设施与描述）</div>
+    </div>
+
+    <div class="tip"><strong>提示：</strong>教室创建后可在列表中编辑。删除教室前需确认该教室无未来排课记录，否则会导致预约数据异常。</div>
+  </section>
+
+  <span class="anchor" id="store-door"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">🚪</span> 如何管理门禁设备</h2>
+      <p>适用于：新门店安装门禁、设备故障更换、远程开门等场景。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>门店管理</strong> <span>→</span> <strong>门禁管理</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>新增门禁设备</h3></div>
+      <div class="card-body">
+        <p>点击「新增门禁设备」，填写以下信息：</p>
+        <ul>
+          <li><strong>设备名称</strong>：便于识别的名称，如「深圳测试教室17号门」</li>
+          <li><strong>设备序列号</strong>：硬件出厂编号，务必准确录入</li>
+          <li><strong>门禁类型</strong>：闸机 / 门 / 教室门禁</li>
+          <li><strong>门店 / 教室</strong>：设备安装的物理位置</li>
+          <li><strong>机构ID</strong>：设备归属的机构标识</li>
+          <li><strong>业务状态</strong>：草稿（调试中）/ 启用（正式运行）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/12-门禁设备.png" alt="门禁设备">
+      <div class="screenshot-caption">图 8-1：门禁设备管理列表</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>门禁高级配置</h3></div>
+      <div class="card-body">
+        <p>在门禁管理页面，除了设备列表外，还提供以下高级配置 Tab：</p>
+        <ul>
+          <li><strong>策略配置</strong>：设置门禁通行策略，如预约用户通行时段、会籍卡用户通行权限等</li>
+          <li><strong>用户策略</strong>：针对特定用户或用户组的通行权限管理</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>日常操作</h3></div>
+      <div class="card-body">
+        <table class="data-table">
+          <tr><th>操作</th><th>场景</th><th>说明</th></tr>
+          <tr><td>查看</td><td>查看设备详情和配置信息</td><td>查看设备完整信息，包括关联门店/教室</td></tr>
+          <tr><td>开门</td><td>用户忘带手机/人脸识别失败</td><td>远程控制门禁开启，需记录原因</td></tr>
+          <tr><td>日志</td><td>排查异常通行记录</td><td>查看该设备的全部通行记录</td></tr>
+          <tr><td>编辑</td><td>设备更换门店/教室</td><td>修改设备位置信息</td></tr>
+          <tr><td>删除</td><td>设备报废</td><td>删除后该设备不再同步用户人脸数据</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="tip tip-warning"><strong>重要提醒：</strong>「开门」操作会直接影响门店物理安全，执行前需核实请求人身份，非紧急情况建议由门店前台处理。</div>
+  </section>
+
+  <!-- ==================== 教练管理 ==================== -->
+  <span class="anchor" id="coach-add"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">🎯</span> 如何添加新教练</h2>
+      <p>适用于：新教练入职时，在系统中录入档案。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>教练管理</strong> <span>→</span> <strong>教练列表</strong> <span>→</span> <strong>添加教练</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>录入教练信息</h3></div>
+      <div class="card-body">
+        <p>点击「添加教练」，填写以下信息：</p>
+        <table class="data-table">
+          <tr><th>字段</th><th>填写说明</th></tr>
+          <tr><td>昵称</td><td>对外展示的名称，如「HH5教练」</td></tr>
+          <tr><td>真实姓名</td><td>真实姓名，用于合同与薪酬发放</td></tr>
+          <tr><td>手机号</td><td>联系方式，用于系统通知</td></tr>
+          <tr><td>性别</td><td>男 / 女</td></tr>
+          <tr><td>经验年限</td><td>从业年限，如「4年经验」</td></tr>
+          <tr><td>角色/等级</td><td>主教练 / 助教 + Level 等级（Level 1~6）</td></tr>
+          <tr><td>合作方式</td><td>全日制 / 兼职 / 实习</td></tr>
+          <tr><td>城市区域</td><td>所属门店的城市与行政区</td></tr>
+          <tr><td>雇佣状态</td><td>在职 / 离职</td></tr>
+        </table>
+        <p style="margin-top:10px;">教练列表支持按「<strong>昵称</strong>」「<strong>真实姓名</strong>」「<strong>手机号</strong>」「<strong>角色</strong>」筛选搜索。每条记录可执行「<strong>查看</strong>」「<strong>编辑</strong>」「<strong>删除</strong>」操作。</p>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/13-教练列表.png" alt="教练列表">
+      <div class="screenshot-caption">图 9-1：教练列表 — 全量教练档案</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>教练状态管理</h3></div>
+      <div class="card-body">
+        <p>在教练列表页可直接管理教练状态：</p>
+        <ul>
+          <li><strong>启用 / 停用</strong>：通过列表中的状态开关快速启用或停用教练账号，停用后该教练不可被排课</li>
+          <li><strong>雇佣状态</strong>：可直接在列表页切换教练的雇佣状态（在职 / 离职），离职后系统保留历史数据但不再允许排课</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>教练入职后需完成的配置</h3></div>
+      <div class="card-body">
+        <p>教练档案创建后，还需完成以下配置才能正常排课：</p>
+        <ul>
+          <li>✅ <strong>配置薪酬</strong>：设置课时费标准（见「如何配置教练薪酬」）</li>
+          <li>✅ <strong>录入人脸</strong>：教练到店完成人脸识别录入，用于门禁通行</li>
+          <li>✅ <strong>提交日程报备</strong>：教练在小程序端提交可授课时段</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <span class="anchor" id="coach-pay"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">💰</span> 如何配置教练薪酬</h2>
+      <p>适用于：新教练入职定薪、老教练调薪、月度薪酬核算时。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>教练管理</strong> <span>→</span> <strong>教练薪酬 / 教练绩效管理</strong> <span>→</span> <strong>课时费配置</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 1：进入教练绩效管理页</h3></div>
+      <div class="card-body">
+        <p>在「教练绩效管理」页面，顶部分析卡展示整体数据：</p>
+        <ul>
+          <li><strong>教练总数</strong>：全部在职教练人数</li>
+          <li><strong>已配置 / 待配置</strong>：已设置课时费的教练数量</li>
+          <li><strong>本月总收入 / 总课时 / 人均收入</strong>：用于薪酬预算参考</li>
+        </ul>
+        <p style="margin-top:10px;">页面提供以下子 Tab，可按需切换查看：</p>
+        <ul>
+          <li><strong>课时费配置</strong>：查看和编辑所有教练的课时费标准</li>
+          <li><strong>绩效记录</strong>：查看教练历史绩效数据和变动记录</li>
+          <li><strong>数据分析</strong>：按时间维度分析教练产能、收入趋势和流失率</li>
+          <li><strong>配置模板</strong>：创建薪酬模板，便于批量应用</li>
+        </ul>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/14-教练绩效管理.png" alt="教练绩效管理">
+      <div class="screenshot-caption">图 10-1：教练绩效管理 — 课时费与收入分析</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 2：配置课时费</h3></div>
+      <div class="card-body">
+        <p>找到目标教练，点击「编辑」进行课时费配置：</p>
+        <table class="data-table">
+          <tr><th>字段</th><th>说明</th></tr>
+          <tr><td>团体课时费</td><td>团体课每节课的基础报酬</td></tr>
+          <tr><td>私教课时费</td><td>私教课每节课的基础报酬</td></tr>
+          <tr><td>训练营课时费</td><td>训练营每节课的基础报酬</td></tr>
+          <tr><td>提成比例</td><td>超出基础课时的提成百分比</td></tr>
+        </table>
+        <p style="margin-top:10px;">每条薪酬记录可执行「<strong>编辑</strong>」「<strong>复制</strong>」「<strong>记录</strong>（查看操作日志）」「<strong>删除</strong>」操作。点击「复制」可快速复制当前教练的薪酬配置给新入职教练。</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 3：设置类目特殊规则（可选）</h3></div>
+      <div class="card-body">
+        <p>对于部分课程类目，可设置差异化薪酬规则：</p>
+        <ul>
+          <li>例如：瑜伽课基础课时费 ¥0.01/节，<strong>保底金额</strong> ¥150.00/节</li>
+          <li>综合体能训练基础课时费 ¥200.00/节，课时费比例 90%</li>
+          <li>设置<strong>生效开始日期</strong>和<strong>生效状态</strong>，支持长期有效或限时生效</li>
+        </ul>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/27-教练薪酬详情.png" alt="教练薪酬详情">
+      <div class="screenshot-caption">图 10-2：教练薪酬详情 — 类目特殊规则配置（含保底金额与生效状态）</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>其他薪酬相关页面</h3></div>
+      <div class="card-body">
+        <p>在教练薪酬模块顶部还设有以下 Tab：</p>
+        <ul>
+          <li><strong>课程类型课时费</strong>：按课程类型统一设置课时费标准，适用于批量调整同类课程的教练报酬</li>
+          <li><strong>教练薪酬报表</strong>：生成教练薪酬汇总报表，支持按月份、门店、教练筛选并导出 Excel，用于财务对账</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip tip-success"><strong>批量操作：</strong>对于薪酬标准相同的教练，可先在「配置模板」中创建模板，再使用「批量配置」一键应用。</div>
+  </section>
+
+  <span class="anchor" id="coach-schedule"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">📋</span> 如何处理教练日程报备</h2>
+      <p>适用于：教练请假、培训、休假时，标记不可排课时段。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>教练管理</strong> <span>→</span> <strong>日程报备</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>查看教练报备记录</h3></div>
+      <div class="card-body">
+        <p>在「日程报备」页面可查看所有教练提交的报备记录。支持按「<strong>教练</strong>」（下拉选择）和「<strong>报备时间范围</strong>」（开始日期-结束日期）筛选搜索。</p>
+        <table class="data-table">
+          <tr><th>字段</th><th>说明</th></tr>
+          <tr><td>主单ID</td><td>报备记录的唯一标识编号</td></tr>
+          <tr><td>教练</td><td>报备教练姓名与ID</td></tr>
+          <tr><td>排课状态</td><td>可排课（绿色）/ 不可排课（红色）</td></tr>
+          <tr><td>报备时段</td><td>不可排课的具体时间段，可展开查看全部时段</td></tr>
+          <tr><td>备注</td><td>报备原因：请假 / 培训 / 休假等</td></tr>
+          <tr><td>提交时间</td><td>报备提交的时间</td></tr>
+        </table>
+        <div class="tip"><strong>提示：</strong>排课系统会自动读取报备数据，在「不可排课」的时段内无法为该教练安排课程。每条报备记录可点击「查看」查看详情。</div>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/15-日程报备.png" alt="日程报备">
+      <div class="screenshot-caption">图 11-1：日程报备 — 教练不可用时段管理</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>处理流程</h3></div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h4>收到报备</h4>
+              <p>教练在小程序端提交日程报备，后台自动同步至「日程报备」列表。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h4>核对排课冲突</h4>
+              <p>检查该教练在报备时段内是否已有排课。如有排课，需联系客户协助改签或取消。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h4>确认报备</h4>
+              <p>后台无需手动审批，报备自动生效。如需撤销（如教练临时取消请假），联系教练在小程序端撤销报备。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip tip-warning"><strong>注意：</strong>教练报备「不可排课」后，系统会自动阻止该时段的排课操作，但已有人预约的历史排课不受影响，需人工处理。</div>
+  </section>
+
+  <!-- ==================== 卡券营销 ==================== -->
+  <span class="anchor" id="card-recharge"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">💎</span> 如何创建储值卡</h2>
+      <p>适用于：推出新储值卡产品、调整现有卡面或价格时。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>卡券管理</strong> <span>→</span> <strong>储值卡</strong> <span>→</span> <strong>快速创建储值卡</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 1：创建储值卡产品</h3></div>
+      <div class="card-body">
+        <p>点击「快速创建储值卡」，配置以下信息：</p>
+        <ul>
+          <li><strong>储值卡名称</strong>：如「VIP储值卡3000元」「新人专享储值卡1000元」</li>
+          <li><strong>售价</strong>：用户实际支付金额</li>
+          <li><strong>赠送金额</strong>：购买时额外赠送的金额（如充 1000 送 100）</li>
+          <li><strong>有效期</strong>：如 365 天，从购买日起计算</li>
+          <li><strong>卡面设计</strong>：上传储值卡封面图，建议按品牌 VI 统一风格</li>
+        </ul>
+        <p style="margin-top:10px;">顶部数据卡片实时展示：<strong>储值卡总数</strong>（已启用张数）、<strong>售卖总额</strong>（含订单笔数）、<strong>赠送金额</strong>（含赠送次数）、<strong>兑换码</strong>（含使用率）、<strong>用户沉淀金额</strong>（含沉淀用户数）。</p>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/16-储值卡管理.png" alt="储值卡管理">
+      <div class="screenshot-caption">图 12-1：储值卡管理系统 — 卡片列表与数据概览</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 2：上架与售卖监控</h3></div>
+      <div class="card-body">
+        <p>创建后卡片默认状态为「启用」，自动在小程序端展示。储值卡管理页面提供以下 Tab：</p>
+        <ul>
+          <li><strong>储值卡管理</strong>：查看卡片列表，展示已售数量、营收数据，支持停用/编辑/删除</li>
+          <li><strong>售卖管理</strong>：查看每笔储值卡购买的订单详情，含购买用户、数量、单价、总金额、支付方式、售卖时间、<strong>操作员</strong>；支持按时间筛选、搜索订单号/用户、导出 Excel</li>
+          <li><strong>赠送体系</strong>：管理储值卡赠送活动规则</li>
+          <li><strong>兑换码系统</strong>：生成和管理储值卡兑换码，监控兑换率和使用数据</li>
+          <li><strong>数据中心</strong>：汇总储值卡整体运营数据，支持多维度分析</li>
+        </ul>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/17-储值卡售卖管理.png" alt="储值卡售卖管理">
+      <div class="screenshot-caption">图 12-2：储值卡售卖管理 — 售卖记录与统计分析</div>
+    </div>
+
+    <div class="tip tip-success"><strong>营销策略：</strong>新用户首次购买建议设置「新人专享」标签和较高赠送比例，提升首单转化率；高面值卡面向忠实会员，用于提升客单价。</div>
+  </section>
+
+  <span class="anchor" id="card-times"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">🎟️</span> 如何创建次卡产品</h2>
+      <p>适用于：推出按次计费的课程包产品，如「10次瑜伽课包」。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>卡券管理</strong> <span>→</span> <strong>次卡模板 → 次卡售卖包</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 1：创建次卡模板</h3></div>
+      <div class="card-body">
+        <p>次卡模板定义了次卡产品的通用规则，创建后可供多个售卖包复用：</p>
+        <ol>
+          <li>进入 <strong>卡券管理 → 次卡模板</strong>，点击「新建」</li>
+          <li>设置<strong>转赠规则</strong>：是否允许转赠、是否允许赠课、转赠价格说明</li>
+          <li>设置<strong>使用金额规则</strong>：单课程最大抵扣金额</li>
+          <li>上传<strong>卡面图片</strong>：建议统一品牌风格</li>
+          <li>提交「<strong>次卡模板发布审批</strong>」，通过后模板可用</li>
+        </ol>
+        <div class="approval-flow">
+          <div class="approval-flow-title">🔒 次卡模板发布审批流</div>
+          <div class="approval-step">运营提交 <span class="approval-arrow">→</span> 运营主管审批 <span class="approval-arrow">→</span> 模板可用</div>
+        </div>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/18-次卡模板详情.png" alt="次卡模板详情">
+      <div class="screenshot-caption">图 13-1：次卡模板详情 — 转赠规则与卡面配置</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 2：创建次卡售卖包</h3></div>
+      <div class="card-body">
+        <p>次卡售卖包是将模板打包为可售卖的商品，用户实际购买的是「售卖包」：</p>
+        <table class="data-table">
+          <tr><th>字段</th><th>说明</th></tr>
+          <tr><td>售卖包名称</td><td>商品名称，如「首次使用后激活」</td></tr>
+          <tr><td>售卖包类型</td><td>自由组合包 / 固定包</td></tr>
+          <tr><td>关联模板</td><td>选择 Step 1 中创建的次卡模板</td></tr>
+          <tr><td>售卖价</td><td>用户实际支付价格</td></tr>
+          <tr><td>原价</td><td>划线原价，用于展示优惠力度</td></tr>
+          <tr><td>总次数</td><td>该卡包含的总课次数</td></tr>
+          <tr><td>已售/库存</td><td>固定包可设置库存上限；自由组合包不限库存</td></tr>
+        </table>
+        <p style="margin-top:10px;">如需售卖，还需配置价格和库存，提交「<strong>次卡售卖审批</strong>」。</p>
+        <p style="margin-top:10px;">次卡售卖包列表支持按「<strong>售卖包名称</strong>」「<strong>关联模板</strong>」「<strong>状态</strong>」「<strong>售卖状态</strong>」筛选搜索。每条记录可执行「<strong>查看</strong>」「<strong>编辑</strong>」「<strong>下架</strong>」操作，下架后前端不再展示该售卖包。</p>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/19-次卡售卖包.png" alt="次卡售卖包">
+      <div class="screenshot-caption">图 13-2：次卡售卖包 — 商品组合与定价配置</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 3：次卡发放策略</h3></div>
+      <div class="card-body">
+        <p>在「<strong>次卡发放策略</strong>」Tab 中，可查看和管理所有次卡的发放记录：</p>
+        <table class="data-table">
+          <tr><th>字段</th><th>说明</th></tr>
+          <tr><td>发放类型</td><td>用户ID / 批量发放等</td></tr>
+          <tr><td>发放方式</td><td>立即发放 / 定时发放</td></tr>
+          <tr><td>目标数量</td><td>计划发放的数量</td></tr>
+          <tr><td>生效日期</td><td>次卡生效的开始日期</td></tr>
+          <tr><td>创建人 / 创建时间</td><td>记录发放操作人和操作时间</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>次卡延期与冻结</h3></div>
+      <div class="card-body">
+        <p>在用户卡券详情页，支持对次卡进行延期、冻结/解冻操作：</p>
+        <ol>
+          <li>找到目标用户的次卡资产</li>
+          <li>点击「延期」可延长有效期（需填写原因）</li>
+          <li>点击「冻结/解冻」可暂停或恢复次卡使用（需填写原因）</li>
+          <li>所有操作均留操作日志，便于审计</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="tip"><strong>类型说明：</strong>「自由组合包」允许用户按需选择课程组合；「固定包」为预设课程组合，适合标准化产品销售。</div>
+  </section>
+
+  <span class="anchor" id="card-coupon"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">🏷️</span> 如何创建优惠券</h2>
+      <p>适用于：节日促销、新客拉新、老客召回等营销活动。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>卡券管理</strong> <span>→</span> <strong>优惠券模板</strong> <span>→</span> <strong>新建</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>创建优惠券步骤</h3></div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h4>设置基础信息</h4>
+              <p>进入 <strong>卡券管理 → 优惠券模板</strong>，点击「新建」。填写优惠券名称、选择优惠券类型（单品优惠券 / 满减券 / 折扣券）、设置优惠方式（满减 / 直减 / 折扣比例）。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h4>配置优惠金额</h4>
+              <p>如「满100减10」「直减50元」。设置是否允许「赠送好友可用」。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h4>设置适用范围</h4>
+              <p>限制优惠券可用的城市、门店、教室、排课。如「仅限北京门店」「仅限瑜伽类课程」。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <h4>提交审批并启用</h4>
+              <p>提交「优惠券模板发布审批」，通过后状态变为「已启用」，可通过运营活动、短信、小程序弹窗等渠道发放给用户。</p>
+            </div>
+          </div>
+        </div>
+        <div class="approval-flow">
+          <div class="approval-flow-title">🔒 优惠券模板发布审批流</div>
+          <div class="approval-step">运营提交 <span class="approval-arrow">→</span> 运营主管审批 <span class="approval-arrow">→</span> 模板可用</div>
+        </div>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/20-优惠券模板详情.png" alt="优惠券模板详情">
+      <div class="screenshot-caption">图 14-1：优惠券模板详情 — 优惠规则与适用范围</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>优惠券详情字段说明</h3></div>
+      <div class="card-body">
+        <p>在优惠券模板详情弹窗中，除基础信息和适用范围外，还包含以下字段：</p>
+        <ul>
+          <li><strong>优惠券ID</strong>：系统生成的唯一标识，可复制使用</li>
+          <li><strong>说明</strong>：优惠券的补充说明文字，可在创建时填写</li>
+          <li><strong>适用排课</strong>：精确到具体排课条目的适用范围限制</li>
+          <li><strong>操作记录</strong>：显示该模板的创建人和更新人，便于追溯责任</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip tip-success"><strong>营销建议：</strong>新客首单建议设置「无门槛直减券」降低决策门槛；老客召回建议设置「满减券」提升客单价；裂变活动建议开启「赠送好友可用」。</div>
+  </section>
+
+  <span class="anchor" id="card-member"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">🎫</span> 如何发放会籍卡</h2>
+      <p>适用于：会员招募活动、企业团购、老客户升级等批量发放场景。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>卡券管理</strong> <span>→</span> <strong>会籍卡模板 / 发放记录</strong> <span>→</span> <strong>手动发放 / 批量发放</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>创建会籍卡模板</h3></div>
+      <div class="card-body">
+        <p>进入 <strong>卡券管理 → 会籍卡模板</strong>，点击「新建」：</p>
+        <ol>
+          <li>填写有效期（月卡 / 季卡 / 年卡）、价格</li>
+          <li>设置无限次预约权限等权益内容</li>
+          <li>提交「会籍卡模板发布审批」，通过后上架</li>
+        </ol>
+        <div class="approval-flow">
+          <div class="approval-flow-title">🔒 会籍卡模板发布审批流</div>
+          <div class="approval-step">运营提交 <span class="approval-arrow">→</span> 运营主管审批 <span class="approval-arrow">→</span> 模板上架</div>
+        </div>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/21-会籍卡发放策略.png" alt="会籍卡发放策略">
+      <div class="screenshot-caption">图 15-1：会籍卡发放策略 — 批量发放记录</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>手动发放卡券</h3></div>
+      <div class="card-body">
+        <p>在 <strong>卡券管理 → 发放记录</strong> 中，选择「手动发放」：</p>
+        <ol>
+          <li>输入用户手机号</li>
+          <li>选择卡券模板（会籍卡 / 次卡 / 优惠券）</li>
+          <li>提交审批后发放，用户会收到小程序推送通知</li>
+        </ol>
+        <div class="approval-flow">
+          <div class="approval-flow-title">🔒 手动发放审批流</div>
+          <div class="approval-step">客服提交 <span class="approval-arrow">→</span> 主管审批 <span class="approval-arrow">→</span> 发放到账</div>
+        </div>
+        <p style="margin-top:10px;">发放记录列表展示以下字段，方便追踪进度：</p>
+        <table class="data-table">
+          <tr><th>字段</th><th>说明</th></tr>
+          <tr><td>发放类型</td><td>用户ID / 批量发放等</td></tr>
+          <tr><td>发放方式</td><td>立即发放 / 定时发放</td></tr>
+          <tr><td>目标数量</td><td>计划发放的数量</td></tr>
+          <tr><td>发放状态</td><td>已完成 / 发放中 / 已取消</td></tr>
+          <tr><td>生效日期</td><td>卡券生效的开始日期</td></tr>
+          <tr><td>创建人 / 创建时间</td><td>记录操作人和操作时间</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>会籍卡延期与冻结</h3></div>
+      <div class="card-body">
+        <p>在用户卡券详情页，支持对会籍卡进行延期、冻结/解冻操作：</p>
+        <ol>
+          <li>找到目标用户的会籍卡资产</li>
+          <li>点击「延期」可延长有效期（需填写原因）</li>
+          <li>点击「冻结/解冻」可暂停或恢复会籍权益（需填写原因）</li>
+          <li>所有操作均留操作日志，便于审计</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="tip"><strong>提示：</strong>发放记录支持按状态筛选，方便追踪批量发放的进度。发放失败的可单独重新发放。</div>
+  </section>
+
+  <!-- ==================== 内容运营 ==================== -->
+  <span class="anchor" id="op-banner"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">📢</span> 如何配置运营位</h2>
+      <p>适用于：在小程序首页、课表页等位置投放广告或活动入口。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>运营位管理</strong> <span>→</span> <strong>新增运营位</strong> <span>→</span> <strong>启用 / 提交审批</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 1：创建运营位</h3></div>
+      <div class="card-body">
+        <p>点击「新增运营位」，填写以下信息：</p>
+        <table class="data-table">
+          <tr><th>字段</th><th>填写说明</th></tr>
+          <tr><td>运营位ID</td><td>系统生成的唯一标识，用于接口对接和排查问题</td></tr>
+          <tr><td>运营位名称</td><td>内部管理名称，如「618大促Banner」</td></tr>
+          <tr><td>投放位置</td><td>首屏弹窗 / 工作台顶部 / 教室课表卡片 / 首页顶部 / 二维码底部等</td></tr>
+          <tr><td>图片</td><td>上传运营素材图，建议按各位置尺寸要求设计</td></tr>
+          <tr><td>排序权重</td><td>同位置多个运营位时的展示顺序，数字越大越靠前</td></tr>
+          <tr><td>投放城市 / 教室</td><td>选择投放范围，支持按城市或具体教室定向</td></tr>
+        </table>
+        <p style="margin-top:10px;">设置用户点击运营位后的行为：</p>
+        <ul>
+          <li><strong>跳转类型</strong>：微信公众号 / 小程序页面 / H5 链接等</li>
+          <li><strong>跳转链接</strong>：目标页面 URL</li>
+          <li><strong>弹窗策略</strong>：展示间隔天数（如 7 天只展示一次）、是否显示「今日不再展示」按钮</li>
+          <li><strong>投放时间</strong>：设置运营位的生效时间段，支持定时上线/下线</li>
+        </ul>
+        <p style="margin-top:10px;">点击保存，状态默认为「已停用」。</p>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/22-运营位管理.png" alt="运营位管理">
+      <div class="screenshot-caption">图 16-1：运营位管理 — 全量运营位列表（支持按投放状态/位置/城市/教室筛选）</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 2：启用运营位</h3></div>
+      <div class="card-body">
+        <p>在运营位列表页，找到该运营位，点击「启用」。系统会提交「运营位上线审批」，审批通过后前端展示。</p>
+        <div class="approval-flow">
+          <div class="approval-flow-title">🔒 运营位上线审批流</div>
+          <div class="approval-step">运营提交 <span class="approval-arrow">→</span> 运营主管审批 <span class="approval-arrow">→</span> 前端展示</div>
+        </div>
+        <p style="margin-top:10px;">运营位列表中「<strong>运行中</strong>」列显示当前是否处于生效投放期，方便快速识别哪些运营位正在前端展示。</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 3：其他操作</h3></div>
+      <div class="card-body">
+        <ul>
+          <li><strong>编辑</strong>：可修改除投放位置外的所有配置</li>
+          <li><strong>停用</strong>：已启用的运营位点击「停用」，前端不再展示</li>
+          <li><strong>删除</strong>：仅「结束」状态的运营位可删除</li>
+        </ul>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/23-运营位详情.png" alt="运营位详情">
+      <div class="screenshot-caption">图 16-2：运营位详情 — 配置信息与移动端预览</div>
+    </div>
+
+    <div class="tip tip-success"><strong>最佳实践：</strong>首屏弹窗建议设置「今日不再展示」避免过度打扰；活动 Banner 建议提前 1 天配置好并设为「待启用」，到时间自动上线。</div>
+  </section>
+
+  <span class="anchor" id="op-agreement"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">📄</span> 如何更新用户协议</h2>
+      <p>适用于：隐私政策调整、服务条款更新、新增业务需要补充协议时。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>运营管理</strong> <span>→</span> <strong>协议管理</strong> <span>→</span> <strong>上传新版本</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>更新协议步骤</h3></div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h4>选择要更新的协议</h4>
+              <p>在协议列表中找到目标协议，如「隐私政策」「自动续费协议」「人脸隐私协议」等。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h4>上传新版本</h4>
+              <p>点击「上传新版本」，上传更新后的协议文件（PDF 或 Word）。系统自动生成新版本号（如 v2026052101）。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h4>启用新版本</h4>
+              <p>上传后新版本的默认状态为「停用」，点击「启用」后，新用户在注册时将看到最新版本协议。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <h4>旧版本处理</h4>
+              <p>旧版本自动变为「停用」状态，但历史同意记录仍保留，便于审计追溯。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="管理后台截图/24-协议管理.png" alt="协议管理">
+      <div class="screenshot-caption">图 17-1：协议管理 — 用户协议版本维护</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>协议列表字段与操作</h3></div>
+      <div class="card-body">
+        <p>协议列表中展示以下字段：</p>
+        <table class="data-table">
+          <tr><th>字段</th><th>说明</th></tr>
+          <tr><td>协议名称</td><td>如「隐私政策」「自动续费协议」</td></tr>
+          <tr><td>协议编码</td><td>系统生成的唯一标识，如 PRIVACY_POLICY</td></tr>
+          <tr><td>协议版本</td><td>版本号，如 v2026052101</td></tr>
+          <tr><td>状态</td><td>启用 / 停用</td></tr>
+          <tr><td>创建人 / 更新人</td><td>记录协议的创建和最后更新操作人员</td></tr>
+          <tr><td>创建时间 / 更新时间</td><td>记录版本创建和修改时间</td></tr>
+        </table>
+        <p style="margin-top:10px;">每条协议可执行「<strong>查看</strong>」（预览协议内容）和「<strong>替换</strong>」（直接替换为最新上传的版本文件）操作。</p>
+      </div>
+    </div>
+
+    <div class="tip tip-danger"><strong>法律提示：</strong>协议更新涉及用户权益，建议更新前由法务审核，并在小程序中以弹窗形式提示已注册用户重新阅读并同意。</div>
+  </section>
+
+  <!-- ==================== 财务管理 ==================== -->
+  <span class="anchor" id="finance-report"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">💰</span> 如何查看教练课时费与财务报表</h2>
+      <p>适用于：月度薪酬核算、财务对账、经营分析汇报。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>财务模块</strong> <span>→</span> <strong>教练课时费 / 财务报表</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>查看教练课时费</h3></div>
+      <div class="card-body">
+        <p>进入 <strong>财务模块 → 教练课时费</strong>：</p>
+        <ul>
+          <li>查看各教练的<strong>课时费明细</strong>：团体课/私教课/训练营分别的课时数量与金额</li>
+          <li>查看<strong>提成比例</strong>与计算方式</li>
+          <li>查看<strong>结算周期</strong>与发放状态</li>
+          <li>支持按时间、教练、门店筛选并导出 Excel</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>查看财务报表</h3></div>
+      <div class="card-body">
+        <p>进入 <strong>财务模块 → 财务报表</strong>：</p>
+        <ul>
+          <li>查看<strong>运营日报 / 周报 / 月报</strong>，支持导出 Excel 格式</li>
+          <li><strong>核心指标</strong>：日活/月活用户、首单转化率、复购率、课程满课率、退费率、客服进线量等</li>
+          <li>支持按城市、门店、时间维度下钻分析</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip tip-success"><strong>最佳实践：</strong>建议每月初导出上月财务报表进行归档，便于年度审计和经营复盘。教练课时费数据与教练绩效管理模块实时同步，如有疑问请交叉核对。</div>
+  </section>
+
+  <!-- ==================== 系统设置 ==================== -->
+  <span class="anchor" id="sys-account"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">⚙️</span> 如何配置账号权限与操作日志</h2>
+      <p>适用于：新员工入职开账号、权限调整、安全审计。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>系统管理</strong> <span>→</span> <strong>账号管理 / 操作日志</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>账号与角色管理</h3></div>
+      <div class="card-body">
+        <p>进入 <strong>系统管理 → 账号管理</strong>：</p>
+        <ol>
+          <li>点击「新建账号」，填写姓名、手机号、登录邮箱/用户名</li>
+          <li>选择<strong>角色</strong>：系统管理员 / 运营 / 客服 / 财务 / 门店负责人等</li>
+          <li>分配<strong>菜单权限</strong>：控制该账号能看到哪些模块</li>
+          <li>分配<strong>操作权限</strong>：控制该账号能执行哪些操作（如普通运营无退款权限，客服主管可处理退款等）</li>
+          <li>保存后账号即时生效，用户可使用手机号+验证码登录</li>
+        </ol>
+        <div class="tip"><strong>权限设计原则：</strong>最小权限原则——只授予完成工作所必需的权限。涉及资金的操作（退款、卡券发放、薪酬修改）建议仅开放给主管级账号。</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>查看操作日志</h3></div>
+      <div class="card-body">
+        <p>所有重要操作均记录操作日志，用于数据安全审计：</p>
+        <table class="data-table">
+          <tr><th>记录类型</th><th>说明</th></tr>
+          <tr><td>退款操作</td><td>退款金额、原因、审批人、执行时间</td></tr>
+          <tr><td>卡券发放</td><td>发放对象、卡券类型、数量、操作人</td></tr>
+          <tr><td>教练信息修改</td><td>修改字段、修改前/后值、操作人</td></tr>
+          <tr><td>报表导出</td><td>导出时间、导出内容、操作人 IP</td></tr>
+          <tr><td>登录记录</td><td>登录时间、IP 地址、登录设备</td></tr>
+        </table>
+        <p style="margin-top:10px;">支持按时间、操作人、操作类型筛选查询。操作日志不可删除或修改，确保审计可追溯。</p>
+      </div>
+    </div>
+
+    <div class="tip tip-warning"><strong>安全提醒：</strong>发现异常操作（如非工作时间大量退款、陌生 IP 登录）时，请立即冻结相关账号并联系技术负责人排查。</div>
+  </section>
+
+  <!-- Footer -->
+  <section class="section" style="text-align:center; padding: 40px; color: var(--text-muted); border-top: 1px solid var(--border);">
+    <p>— 本手册由 SAVAGE 运营团队维护 —</p>
+    <p style="font-size: 13px; margin-top: 8px;">最后更新：2026-06-05 | 共 18 个业务场景 | 包含审批流与操作日志说明</p>
+  </section>
+
+</main>
+
+<script>
+  // ===================== Search =====================
+  const searchInput = document.getElementById('searchInput');
+  const searchClear = document.getElementById('searchClear');
+  const searchNav = document.getElementById('searchNav');
+  const searchCount = document.getElementById('searchCount');
+  const searchPrev = document.getElementById('searchPrev');
+  const searchNext = document.getElementById('searchNext');
+
+  let matches = [];
+  let currentMatchIndex = -1;
+  let highlightToken = 0;
+
+  function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function removeHighlights() {
+    document.body.classList.remove('is-searching');
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('has-match'));
+    document.querySelectorAll('span.search-highlight').forEach(span => {
+      const parent = span.parentNode;
+      parent.replaceChild(document.createTextNode(span.textContent), span);
+      parent.normalize();
+    });
+  }
+
+  function highlightText(node, keyword, token) {
+    if (token !== highlightToken) return;
+    const text = node.textContent;
+    const regex = new RegExp('(' + escapeRegExp(keyword) + ')', 'gi');
+    const parts = text.split(regex);
+    if (parts.length <= 1) return;
+
+    const fragment = document.createDocumentFragment();
+    parts.forEach((part, i) => {
+      if (i % 2 === 1) {
+        const span = document.createElement('span');
+        span.className = 'search-highlight';
+        span.textContent = part;
+        fragment.appendChild(span);
+        matches.push(span);
+      } else if (part) {
+        fragment.appendChild(document.createTextNode(part));
+      }
+    });
+    node.parentNode.replaceChild(fragment, node);
+  }
+
+  function doSearch(keyword) {
+    removeHighlights();
+    matches = [];
+    currentMatchIndex = -1;
+
+    if (!keyword || keyword.trim().length === 0) {
+      searchNav.style.display = 'none';
+      searchClear.style.display = 'none';
+      return;
+    }
+
+    searchClear.style.display = 'block';
+    highlightToken++;
+    const token = highlightToken;
+    const walker = document.createTreeWalker(
+      document.querySelector('.main'),
+      NodeFilter.SHOW_TEXT,
+      null,
+      false
+    );
+    const textNodes = [];
+    let node;
+    while ((node = walker.nextNode()) !== null) {
+      if (node.parentNode.tagName === 'SCRIPT' || node.parentNode.tagName === 'STYLE') continue;
+      if (node.parentNode.closest('.search-bar')) continue;
+      if (node.parentNode.closest('.sidebar')) continue;
+      if (node.parentNode.closest('.hero')) continue;
+      textNodes.push(node);
+    }
+    // Process from end to start to avoid index shift issues
+    for (let i = textNodes.length - 1; i >= 0; i--) {
+      if (textNodes[i].textContent.toLowerCase().includes(keyword.toLowerCase())) {
+        highlightText(textNodes[i], keyword, token);
+      }
+    }
+
+    // Mark sections that have matches
+    matches.forEach(span => {
+      const section = span.closest('.section');
+      if (section) section.classList.add('has-match');
+    });
+    document.body.classList.add('is-searching');
+
+    updateSearchUI();
+    if (matches.length > 0) {
+      goToMatch(0);
+    }
+  }
+
+  function updateSearchUI() {
+    if (matches.length === 0) {
+      searchCount.innerHTML = '<span class="no-match">无匹配</span>';
+      searchPrev.disabled = true;
+      searchNext.disabled = true;
+    } else {
+      searchCount.textContent = (currentMatchIndex + 1) + ' / ' + matches.length;
+      searchPrev.disabled = currentMatchIndex <= 0;
+      searchNext.disabled = currentMatchIndex >= matches.length - 1;
+    }
+    searchNav.style.display = 'flex';
+  }
+
+  function goToMatch(index) {
+    if (index < 0 || index >= matches.length) return;
+    matches.forEach((m, i) => m.classList.toggle('active', i === index));
+    currentMatchIndex = index;
+    matches[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    updateSearchUI();
+  }
+
+  let searchTimeout;
+  searchInput.addEventListener('input', (e) => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => doSearch(e.target.value.trim()), 200);
+  });
+
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (matches.length === 0) return;
+      goToMatch((currentMatchIndex + 1) % matches.length);
+    } else if (e.key === 'Escape') {
+      searchClear.click();
+    }
+  });
+
+  searchClear.addEventListener('click', () => {
+    searchInput.value = '';
+    searchInput.focus();
+    doSearch('');
+  });
+
+  searchPrev.addEventListener('click', () => goToMatch(currentMatchIndex - 1));
+  searchNext.addEventListener('click', () => goToMatch(currentMatchIndex + 1));
+
+  // ===================== Smooth scroll + active nav =====================
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function(e) {
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      this.classList.add('active');
+      if (window.innerWidth <= 900) {
+        document.querySelector('.sidebar').classList.remove('open');
+      }
+    });
+  });
+
+  // Scroll spy
+  const sections = document.querySelectorAll('.anchor');
+  const navItems = document.querySelectorAll('.nav-item');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (scrollY >= sectionTop - 100) {
+        current = section.getAttribute('id');
+      }
+    });
+    navItems.forEach(item => {
+      item.classList.remove('active');
+      if (item.getAttribute('href') === '#' + current) {
+        item.classList.add('active');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

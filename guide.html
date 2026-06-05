@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SAVAGE 小程序使用指南</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f5f6f7;
+      color: #1a1a1a;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap {
+      max-width: 480px;
+      margin: 0 auto;
+      background: #fff;
+      min-height: 100vh;
+      padding-bottom: 32px;
+    }
+
+    /* 顶部标题栏 */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .header-back {
+      position: absolute;
+      left: 8px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .header-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    /* 每个步骤 */
+    .step {
+      padding: 20px 16px;
+      border-bottom: 8px solid #f5f6f7;
+    }
+    .step:last-child {
+      border-bottom: none;
+    }
+
+    /* 步骤头部 */
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #2563eb;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    /* 入口标签 */
+    .entry-tag {
+      display: inline-flex;
+      align-items: center;
+      background: #eff6ff;
+      color: #2563eb;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+    .entry-tag::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #2563eb;
+      margin-right: 6px;
+    }
+
+    /* 步骤文字 */
+    .step-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #444;
+    }
+    .step-text p {
+      margin-bottom: 6px;
+    }
+    .step-text ol {
+      padding-left: 18px;
+      margin-bottom: 6px;
+    }
+    .step-text li {
+      margin-bottom: 3px;
+    }
+    .step-text ul {
+      padding-left: 16px;
+      margin-bottom: 6px;
+      list-style: none;
+    }
+    .step-text ul li {
+      position: relative;
+      padding-left: 12px;
+      margin-bottom: 3px;
+    }
+    .step-text ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #2563eb;
+    }
+
+    /* 左右布局（单图） */
+    .step-body {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .step-body .step-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* 多图横向排列 */
+    .shots-row {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 14px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+    }
+
+    /* 截图容器 */
+    .shot-wrap {
+      width: 150px;
+      flex-shrink: 0;
+    }
+    .shots-row .shot-wrap {
+      width: 100px;
+    }
+    .shot-wrap img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      border: 1px solid #f0f0f0;
+      display: block;
+    }
+
+    /* 图片顶部文字提示 */
+    .shot-hint {
+      text-align: center;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    /* 注意事项 */
+    .tip {
+      margin-top: 12px;
+      padding: 10px 12px;
+      background: #fafafa;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #888;
+      line-height: 1.6;
+    }
+    .tip strong {
+      color: #666;
+    }
+
+    /* 底部说明 */
+    .footer-note {
+      text-align: center;
+      padding: 20px 16px;
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    /* 响应式 */
+    @media (max-width: 360px) {
+      .step-body {
+        flex-direction: column;
+      }
+      .shot-wrap {
+        width: 180px;
+        margin: 0 auto;
+        order: -1;
+      }
+      .shots-row .shot-wrap {
+        width: 90px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- 顶部 -->
+    <div class="header">
+      <div class="header-back">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </div>
+      <div class="header-title">小程序使用指南</div>
+    </div>
+
+    <!-- 1. 约课流程 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div class="step-title">约课流程</div>
+      </div>
+      <div class="entry-tag">打开小程序 → 默认进入「预约」页面</div>
+      <div class="step-text">
+        <ol>
+          <li>顶部日期栏左右滑动，选择上课日期</li>
+          <li>使用筛选栏按「收藏教练 / 课程类型 / 门店 / 时间」缩小范围，或直接搜索关键词</li>
+          <li>点击课程卡片进入详情，确认信息后点击「立即预约」</li>
+          <li>订单确认页选择支付方式，点击「确认预约」并支付</li>
+        </ol>
+      </div>
+      <div class="shots-row">
+        <div class="shot-wrap">
+          <div class="shot-hint">点击「预约」按钮</div>
+          <img src="images/预约-课程列表.png" alt="课程列表">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">点击「确认预约」</div>
+          <img src="images/订单确认-支付方式选择.png" alt="支付方式选择">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">支付成功查看预约</div>
+          <img src="images/预约-支付成功.png" alt="支付成功">
+        </div>
+      </div>
+      <div class="tip"><strong>注意：</strong>热门课程建议提前预约；部分课程支持多人预约。支付成功后通常几秒内生成预约码，若长时间未更新，请检查「全部订单」中是否有「待确认」状态的订单。</div>
+    </div>
+
+    <!-- 2. 候补课程 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div class="step-title">候补课程</div>
+      </div>
+      <div class="entry-tag">预约页面 → 课程显示「候补」</div>
+      <div class="step-text">
+        <ol>
+          <li>在课程列表中找到状态为「候补」的课程，点击「候补」按钮</li>
+          <li>进入候补支付流程，确认排队后支付</li>
+          <li>有人取消时系统将自动为你补位，结果通过短信和微信通知</li>
+        </ol>
+      </div>
+      <div class="shots-row">
+        <div class="shot-wrap">
+          <div class="shot-hint">点击「排队」按钮</div>
+          <img src="images/预约-课程列表.png" alt="课程列表-排队">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">点击「确认排队」</div>
+          <img src="images/排队候补.png" alt="候补排队">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">支付成功查看排队</div>
+          <img src="images/候补排队提交成功.png" alt="候补成功">
+        </div>
+      </div>
+      <div class="tip"><strong>注意：</strong>候补不保证一定能成功，建议尽早预约热门课程。候补状态可以在「运动」-「训练记录」查看排队情况。</div>
+    </div>
+
+    <!-- 3. 上课签到 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div class="step-title">上课签到</div>
+      </div>
+      <div class="step-text">
+        <p><strong>方式一：二维码签到（仅非会籍卡用户）</strong></p>
+        <ol>
+          <li>进入「我的」页面，点击右上角二维码图标</li>
+          <li>门禁扫码，扫描后即完成签到</li>
+        </ol>
+        <p style="margin-top:6px;"><strong>方式二：人脸识别签到（均可）</strong></p>
+        <p>到店后直接面对门禁摄像头完成刷脸签到（确保已录入人脸）。</p>
+        <p style="margin-top:4px; color:#2563eb; font-size:13px;">签到时间：课前60分钟 ~ 课后30分钟</p>
+      </div>
+      <div class="shots-row">
+        <div class="shot-wrap">
+          <div class="shot-hint">点击右上角二维码</div>
+          <img src="images/个人中心.png" alt="个人中心">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">出示二维码签到</div>
+          <img src="images/入场二维码.png" alt="入场二维码">
+        </div>
+      </div>
+      <div class="tip"><strong>注意：</strong>课程开始5分钟后将停止签到；会籍卡用户只能通过人脸识别签到。</div>
+    </div>
+
+    <!-- 4. 人脸识别录入 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div class="step-title">人脸识别录入</div>
+      </div>
+      <div class="entry-tag">底部导航「我的」→「人脸录入」</div>
+      <div class="step-text">
+        <ol>
+          <li>在「我的」页面进入「人脸录入」</li>
+          <li>正面面对摄像头，确保不遮挡面部，按提示完成采集</li>
+          <li>采集成功后，后续到店可直接刷脸签到</li>
+        </ol>
+      </div>
+      <div class="shots-row">
+        <div class="shot-wrap">
+          <div class="shot-hint">点击「人脸录入」</div>
+          <img src="images/我的页.png" alt="人脸录入入口">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">点击「开始采集」</div>
+          <img src="images/人脸识别采集.png" alt="人脸采集">
+        </div>
+      </div>
+      <div class="tip"><strong>注意：</strong>若人脸识别设备故障，可请前台工作人员手动签到。</div>
+    </div>
+
+    <!-- 5. 取消预约与退款 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">5</div>
+        <div class="step-title">取消预约与退款</div>
+      </div>
+      <div class="entry-tag">「我的」→「我的订单」</div>
+      <div class="step-text">
+        <ol>
+          <li>进入「我的订单」，找到需要取消的课程，点击「订单详情」</li>
+          <li>在预约详情页点击「申请退款」</li>
+          <li>选择退款原因，确认退款金额后提交申请</li>
+        </ol>
+        <p style="margin-top:6px;">未使用订单全额退回原支付渠道；已部分使用的资产按剩余金额退还。</p>
+        <p style="margin-top:6px;"><strong>取消规则：</strong></p>
+        <ul>
+          <li>课前<strong>2小时外</strong>取消：全额退款</li>
+          <li>课前<strong>2小时内</strong>取消：仅释放名额，不退费</li>
+        </ul>
+      </div>
+      <div class="shots-row">
+        <div class="shot-wrap">
+          <div class="shot-hint">点击「订单详情」</div>
+          <img src="images/我的订单.png" alt="订单列表">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">点击「申请退款」</div>
+          <img src="images/预约详情-申请退款.png" alt="预约详情">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">确认并提交退款</div>
+          <img src="images/申请退款.png" alt="申请退款">
+        </div>
+      </div>
+      <div class="tip"><strong>注意：</strong>退款通常1-7个工作日到账；超时取消可能影响信用，具体以各门店公告为准。若超过24小时仍显示失败，请联系客服。</div>
+    </div>
+
+    <!-- 6. 会籍卡与次卡管理 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">6</div>
+        <div class="step-title">会籍卡与次卡管理</div>
+      </div>
+      <div class="step-body">
+        <div class="step-text">
+          <p><strong>购买会籍卡</strong></p>
+          <ol>
+            <li>首页 / 个人中心 → 点击会籍卡入口</li>
+            <li>选择会籍类型（连续包月 / 年卡月付 / 单月购买）</li>
+            <li>确认开卡日期与门店 → 阅读协议 →「确认开通」</li>
+          </ol>
+          <p style="margin-top:8px;"><strong>次卡管理</strong>：「我的」→「次卡」</p>
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">点击会籍卡入口</div>
+          <img src="images/个人中心.png" alt="个人中心">
+        </div>
+      </div>
+      <div class="tip"><strong>注意：</strong>会籍卡有效期内可无限次约课，到期自动停止。次卡到期后剩余次数失效。</div>
+    </div>
+
+    <!-- 7. 次卡转赠与赠送课程 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">7</div>
+        <div class="step-title">次卡转赠与赠送课程</div>
+      </div>
+      <div class="entry-tag">次卡/课程详情页 →「赠送好友」</div>
+      <div class="step-text">
+        <ol>
+          <li>进入次卡详情页或课程详情页，点击「赠送好友」</li>
+          <li>选择接收人及赠送数量，分享给微信好友</li>
+          <li>好友点击领取后资产到账</li>
+        </ol>
+        <p>可在「我的」→「赠课记录」中查看赠送历史。</p>
+      </div>
+      <div class="shots-row">
+        <div class="shot-wrap">
+          <div class="shot-hint">点击「赠送好友」</div>
+          <img src="images/次卡-赠送好友入口.png" alt="赠送入口">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">选择数量并确认</div>
+          <img src="images/次卡-选择赠送数量.png" alt="选择数量">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">分享给微信好友</div>
+          <img src="images/次卡赠送-确认赠送.png" alt="确认转赠">
+        </div>
+      </div>
+      <div class="tip"><strong>注意：</strong>仅限「未使用」状态的次卡；课程开始后不可赠送；受赠人需在有效期内领取。</div>
+    </div>
+
+    <!-- 8. 申请开发票 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">8</div>
+        <div class="step-title">申请开发票</div>
+      </div>
+      <div class="entry-tag">「我的」→「我的发票」→「申请开票」</div>
+      <div class="step-text">
+        <ol>
+          <li>进入「我的」页面，点击「我的发票」</li>
+          <li>在发票管理页点击底部「申请开票」</li>
+          <li>选择发票类型，填写抬头名称与公司税号，点击「提交申请」</li>
+        </ol>
+        <p style="margin-top:6px;">开票成功后可在发票管理中下载发票。</p>
+      </div>
+      <div class="shots-row">
+        <div class="shot-wrap">
+          <div class="shot-hint">点击「我的发票」</div>
+          <img src="images/我的页.png" alt="我的发票入口">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">点击「申请开票」</div>
+          <img src="images/发票管理-发票列表&申请入口.png" alt="发票管理">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">填写信息后提交申请</div>
+          <img src="images/申请开票-抬头填写.png" alt="填写抬头">
+        </div>
+      </div>
+      <div class="tip"><strong>注意：</strong>请确保抬头信息填写正确，开票后通常1-3个工作日内可下载。</div>
+    </div>
+
+    <div class="footer-note">
+      本指南覆盖 SAVAGE 小程序最常用的 8 项操作<br>其他功能可在小程序内按需探索
+    </div>
+
+  </div>
+</body>
+</html>
