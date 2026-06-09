@@ -504,7 +504,6 @@
     <a class="nav-item" href="#course-schedule">如何进行排课</a>
     <a class="nav-item" href="#store-setup">门店信息维护</a>
     <a class="nav-item" href="#coach-add">添加教练与配置薪酬</a>
-    <a class="nav-item" href="#card-recharge">创建储值卡</a>
     <a class="nav-item" href="#card-times">创建次卡产品</a>
     <a class="nav-item" href="#card-coupon">创建优惠券</a>
     <a class="nav-item" href="#op-banner">配置运营位</a>
@@ -560,7 +559,7 @@
           <li><a href="#daily-dashboard">查看每日经营数据</a> — 晨会数据</li>
           <li><a href="#daily-report">报表查看</a> — 运营日报/周报/月报</li>
           <li><a href="#course-schedule">如何进行排课</a> — 每周固定工作</li>
-          <li><a href="#card-recharge">创建卡券产品</a> — 营销活动配置</li>
+          <li><a href="#card-times">创建次卡产品</a> / <a href="#card-coupon">创建优惠券</a> — 营销活动配置</li>
           <li><a href="#op-banner">配置运营位</a> — 活动投放</li>
         </ol>
       </div>
@@ -603,13 +602,12 @@
       <div class="card-body">
         <table class="data-table">
           <tr><th>术语</th><th>定义</th><th>举例</th></tr>
-          <tr><td>储值卡</td><td>预充值型虚拟卡，用户先付款充值，后续消费从余额中扣减</td><td>「充1000送100」的 VIP 储值卡</td></tr>
           <tr><td>次卡</td><td>按次数计费的课程包，每上一次课扣减 1 次</td><td>「10次瑜伽课包」</td></tr>
           <tr><td>次卡模板</td><td>次卡的通用规则模板（转赠规则、抵扣金额、卡面），可被多个售卖包复用</td><td>「瑜伽次卡通用模板」</td></tr>
           <tr><td>次卡售卖包</td><td>基于模板创建的、可直接售卖的商品，用户实际购买的是售卖包</td><td>「10次瑜伽固定包」售价 ¥899</td></tr>
           <tr><td>会籍卡</td><td>期限内无限次预约的会员卡，如月卡/季卡/年卡</td><td>「季度无限卡」</td></tr>
           <tr><td>优惠券</td><td>满减/直减/折扣券，下单时抵扣金额</td><td>「满100减10」「新人直减50」</td></tr>
-          <tr><td>资产</td><td>用户账户中持有的全部虚拟权益统称（次卡、会籍卡、优惠券、储值余额）</td><td>「该用户资产：次卡2张、优惠券3张」</td></tr>
+          <tr><td>资产</td><td>用户账户中持有的全部虚拟权益统称（次卡、会籍卡、优惠券）</td><td>「该用户资产：次卡2张、优惠券3张」</td></tr>
         </table>
       </div>
     </div>
@@ -648,7 +646,7 @@
     <div class="card">
       <div class="card-header"><h3>Step 2：进入用户详情 → 查看资产</h3></div>
       <div class="card-body">
-        <p>点击用户进入详情页，切换到「<strong>资产管理</strong>」标签，查看该用户持有的次卡、会籍卡、优惠券及储值余额情况。</p>
+        <p>点击用户进入详情页，切换到「<strong>资产管理</strong>」标签，查看该用户持有的次卡、会籍卡、优惠券情况。</p>
         <ul>
           <li>核对资产有效期、剩余次数/金额是否正常</li>
           <li>如用户反馈「找不到卡」，先在此确认是否过期、已用完或冻结</li>
@@ -714,7 +712,7 @@
       </div>
     </div>
 
-    <div class="tip tip-warning"><strong>注意事项：</strong>已核销的课程订单原则上不支持退款；储值卡退款需扣除已消费金额及赠送金。所有退款操作均记录操作日志，不可删除。</div>
+    <div class="tip tip-warning"><strong>注意事项：</strong>已核销的课程订单原则上不支持退款。所有退款操作均记录操作日志，不可删除。</div>
   </section>
 
   <span class="anchor" id="daily-invoice"></span>
@@ -762,7 +760,7 @@
     <div class="card">
       <div class="card-header"><h3>Step 1：搜索用户</h3></div>
       <div class="card-body">
-        <p>进入「用户管理」，输入手机号搜索目标用户。列表中「资产信息」概览列可直接查看储值余额、次卡剩余次数、优惠券张数，无需进入详情页。</p>
+        <p>进入「用户管理」，输入手机号搜索目标用户。列表中「资产信息」概览列可直接查看次卡剩余次数、优惠券张数，无需进入详情页。</p>
       </div>
     </div>
     
@@ -771,7 +769,7 @@
       <img src="screenshots/03-用户列表.png" alt="用户列表">
       <div class="screenshot-caption">图 4-1：用户列表 — 支持多维度搜索，列表可直接查看资产概览</div>
     </div>
-    <div class="tip"><strong>图中关键操作点：</strong>① 搜索框支持昵称/手机号/用户ID模糊搜索；② 「资产信息」列可直接查看储值余额、次卡剩余次数、优惠券张数；③ 勾选多用户后可点击「批量添加标签」。</div>
+    <div class="tip"><strong>图中关键操作点：</strong>① 搜索框支持昵称/手机号/用户ID模糊搜索；② 「资产信息」列可直接查看次卡剩余次数、优惠券张数；③ 勾选多用户后可点击「批量添加标签」。</div>
 
     <div class="card">
       <div class="card-header"><h3>Step 2：查看用户详情与资产</h3></div>
@@ -1221,57 +1219,6 @@
   </section>
 
   <!-- ==================== 卡券营销 ==================== -->
-  <span class="anchor" id="card-recharge"></span>
-  <section class="section">
-    <div class="section-header">
-      <h2><span class="icon">💎</span> 如何创建储值卡</h2>
-      <p>适用于：推出新储值卡产品、调整现有卡面或价格时。</p>
-    </div>
-
-    <div class="path">📍 操作路径：<strong>卡券管理</strong> <span>→</span> <strong>储值卡</strong> <span>→</span> <strong>快速创建储值卡</strong></div>
-
-    <div class="card">
-      <div class="card-header"><h3>Step 1：创建储值卡产品</h3></div>
-      <div class="card-body">
-        <p>点击「快速创建储值卡」，配置：</p>
-        <ul>
-          <li><strong>储值卡名称</strong>：如「VIP储值卡3000元」「新人专享储值卡1000元」</li>
-          <li><strong>售价 / 赠送金额</strong>：用户实际支付金额及额外赠送（如充 1000 送 100）</li>
-          <li><strong>有效期</strong>：如 365 天，从购买日起计算</li>
-          <li><strong>卡面设计</strong>：上传储值卡封面图，建议按品牌 VI 统一风格</li>
-        </ul>
-        <p style="margin-top:8px;">顶部数据卡片实时展示储值卡总数、售卖总额、赠送金额、兑换码使用率、用户沉淀金额等核心指标。</p>
-      </div>
-    </div>
-    
-
-    <div class="screenshot">
-      <img src="screenshots/16-储值卡管理.png" alt="储值卡管理">
-      <div class="screenshot-caption">图 8-1：储值卡管理系统 — 卡片列表与数据概览</div>
-    </div>
-    <div class="tip"><strong>图中关键操作点：</strong>① 顶部数据卡片实时展示储值卡总数、售卖总额、用户沉淀金额等核心指标；② 列表中可直接点击「停用」暂停售卖，无需删除；③ 点击「快速创建储值卡」进入新建流程。</div>
-
-    <div class="card">
-      <div class="card-header"><h3>Step 2：上架与售卖监控</h3></div>
-      <div class="card-body">
-        <p>创建后默认「启用」，自动在小程序端展示。储值卡页面提供以下 Tab：</p>
-        <ul>
-          <li><strong>储值卡管理</strong>：卡片列表，支持停用/编辑/删除</li>
-          <li><strong>售卖管理</strong>：查看每笔购买订单详情，支持按时间筛选、导出 Excel</li>
-          <li><strong>赠送体系</strong>：管理储值卡赠送活动规则</li>
-          <li><strong>兑换码系统</strong>：生成和管理兑换码，监控兑换率</li>
-          <li><strong>数据中心</strong>：汇总整体运营数据，支持多维度分析</li>
-        </ul>
-      </div>
-    </div>
-    <div class="screenshot">
-      <img src="screenshots/17-储值卡售卖管理.png" alt="储值卡售卖管理">
-      <div class="screenshot-caption">图 8-2：储值卡售卖管理 — 售卖记录与统计分析</div>
-    </div>
-
-    <div class="tip tip-success"><strong>营销策略：</strong>新用户首次购买建议设置「新人专享」标签和较高赠送比例；高面值卡面向忠实会员，用于提升客单价。</div>
-  </section>
-
   <span class="anchor" id="card-times"></span>
   <section class="section">
     <div class="section-header">
@@ -1549,7 +1496,7 @@
       <div class="card-body">
         <ul>
           <li><strong>双人复核</strong>：涉及资金的退款、卡券发放、薪酬修改等敏感操作，建议由另一名同事复核后再执行</li>
-          <li><strong>退款上限</strong>：退款金额不得超过用户实付金额，储值卡退款需扣除已消费及赠送金部分</li>
+          <li><strong>退款上限</strong>：退款金额不得超过用户实付金额</li>
           <li><strong>对账要求</strong>：每日下班前核对当日退款笔数与金额，确保与财务系统一致</li>
           <li><strong>异常上报</strong>：发现非工作时间大量退款、陌生 IP 登录、异常批量导出，立即冻结账号并上报</li>
         </ul>
