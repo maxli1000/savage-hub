@@ -482,7 +482,12 @@
       gap: 10px;
     }
 
-    .modal-actions .btn-primary { flex: 2; }
+    .modal-actions .btn-primary {
+      flex: 2;
+      white-space: nowrap;
+      font-size: 15px;
+      padding: 14px 18px;
+    }
     .modal-actions .btn-secondary {
       flex: 1;
       padding: 14px;
@@ -867,7 +872,7 @@
         actionBtn.disabled = true;
         actionBtn.classList.add('done');
       } else {
-        actionBtn.textContent = `我已阅读并同意《${agreements[currentTab].title}》`;
+        actionBtn.textContent = `同意《${agreements[currentTab].title}》`;
         actionBtn.disabled = false;
       }
     }
