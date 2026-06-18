@@ -37,7 +37,7 @@
     .page {
       max-width: 420px;
       margin: 0 auto;
-      padding: 24px 16px 120px;
+      padding: 24px 16px 140px;
       min-height: 100vh;
     }
 
@@ -53,46 +53,85 @@
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #c68b59 0%, #2d6b6b 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
       font-size: 20px;
       font-weight: 600;
+      overflow: hidden;
     }
 
-    .user-info h2 { margin: 0; font-size: 18px; font-weight: 600; }
-    .user-info p { margin: 4px 0 0; font-size: 13px; color: var(--text-secondary); }
+    .avatar::after {
+      content: '';
+      width: 24px;
+      height: 24px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 50%;
+      position: absolute;
+      top: 8px;
+    }
+
+    .user-meta { flex: 1; }
+    .user-meta h2 { margin: 0; font-size: 18px; font-weight: 600; }
+    .user-meta p {
+      margin: 3px 0 0;
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .renew-btn {
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: none;
+      background: var(--black);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
 
     /* 会籍卡 */
     .card {
-      background: linear-gradient(135deg, #c9a227 0%, #d4af37 50%, #e8c547 100%);
+      background: var(--black);
       border-radius: var(--radius);
       padding: 24px;
       color: #fff;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      right: -60px;
+      top: -60px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.12);
     }
 
     .card::after {
       content: '';
       position: absolute;
-      right: -40px;
-      top: -40px;
-      width: 160px;
-      height: 160px;
+      right: -20px;
+      bottom: -20px;
+      width: 140px;
+      height: 140px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .card-brand {
       font-size: 24px;
       font-weight: 700;
       letter-spacing: 2px;
-      margin-bottom: 32px;
+      margin-bottom: 36px;
       position: relative;
       z-index: 1;
     }
@@ -102,7 +141,7 @@
       font-weight: 500;
       letter-spacing: 0;
       margin-left: 8px;
-      opacity: 0.95;
+      opacity: 0.9;
     }
 
     .card-row {
@@ -115,8 +154,8 @@
 
     .card-label {
       font-size: 13px;
-      opacity: 0.9;
-      margin-bottom: 4px;
+      opacity: 0.65;
+      margin-bottom: 6px;
     }
 
     .card-value {
@@ -125,14 +164,18 @@
     }
 
     .card-price {
-      font-size: 42px;
+      font-size: 48px;
       font-weight: 700;
       line-height: 1;
+      display: flex;
+      align-items: flex-start;
     }
 
     .card-price small {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 500;
+      margin-top: 6px;
+      margin-right: 2px;
     }
 
     /* 选择套餐 */
@@ -140,7 +183,7 @@
       background: var(--surface);
       border-radius: var(--radius);
       padding: 20px;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       box-shadow: var(--shadow);
     }
 
@@ -159,11 +202,12 @@
       flex: 1;
       border: 1.5px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 14px 8px;
+      padding: 14px 8px 12px;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s;
       position: relative;
+      background: #fff;
     }
 
     .plan.active {
@@ -175,22 +219,49 @@
       position: absolute;
       top: -1px;
       left: -1px;
-      right: -1px;
+      padding: 3px 8px;
       background: var(--black);
       color: #fff;
       font-size: 10px;
-      padding: 3px 0;
-      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      border-radius: var(--radius-sm) 0 var(--radius-sm) 0;
     }
 
-    .plan-price {
-      font-size: 22px;
-      font-weight: 700;
+    .plan-price-wrap {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 2px;
       margin-bottom: 4px;
     }
 
+    .plan-price {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
     .plan-price small { font-size: 12px; font-weight: 500; }
-    .plan-name { font-size: 13px; color: var(--text-secondary); }
+
+    .plan-original {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      text-decoration: line-through;
+      margin-right: 4px;
+    }
+
+    .plan-discount {
+      display: inline-block;
+      font-size: 10px;
+      color: #fff;
+      background: #ff7a45;
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+
+    .plan-name {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 6px;
+    }
 
     .plan-check {
       position: absolute;
@@ -218,6 +289,115 @@
       margin-top: 12px;
       line-height: 1.6;
     }
+
+    /* 会籍权益 */
+    .benefits-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .benefits-title-row h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .benefits-tag {
+      font-size: 11px;
+      color: #fff;
+      background: var(--black);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .benefit-item {
+      text-align: center;
+      padding: 12px 4px;
+      border-radius: 10px;
+      background: #fafafa;
+    }
+
+    .benefit-icon {
+      width: 32px;
+      height: 32px;
+      margin: 0 auto 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #fff;
+      border: 1px solid var(--border);
+      font-size: 16px;
+    }
+
+    .benefit-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    .benefit-desc {
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* 权益横向对比 */
+    .compare-section {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .compare-section h3 {
+      margin: 0 0 14px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .compare-table th,
+    .compare-table td {
+      padding: 10px 6px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .compare-table th:first-child,
+    .compare-table td:first-child {
+      text-align: left;
+      padding-left: 0;
+    }
+
+    .compare-table th {
+      color: var(--text-secondary);
+      font-weight: 500;
+      background: #fafafa;
+    }
+
+    .compare-table .active-col {
+      background: #fffbe6;
+      color: var(--gold-dark);
+      font-weight: 600;
+    }
+
+    .compare-table .yes { color: var(--success); font-weight: 600; }
+    .compare-table .no { color: var(--text-tertiary); }
 
     /* 底部栏 */
     .bottom-bar {
@@ -254,8 +434,9 @@
     }
 
     .agree-row a {
-      color: var(--gold-dark);
-      text-decoration: none;
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
 
     .btn-primary {
@@ -322,21 +503,6 @@
       font-weight: 600;
       text-align: center;
       margin: 0 0 14px;
-    }
-
-    .modal-close {
-      position: absolute;
-      right: 16px;
-      top: 16px;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      border: none;
-      background: #f5f5f7;
-      font-size: 18px;
-      line-height: 1;
-      cursor: pointer;
-      color: var(--text-secondary);
     }
 
     .tabs {
@@ -459,24 +625,6 @@
       flex-shrink: 0;
     }
 
-    .modal-agree {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-      font-size: 13px;
-      color: var(--text-secondary);
-    }
-
-    .modal-agree input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
-      accent-color: var(--black);
-      flex-shrink: 0;
-    }
-
-    .modal-agree label { cursor: pointer; user-select: none; }
-
     .modal-actions {
       display: flex;
       gap: 10px;
@@ -488,6 +636,7 @@
       font-size: 15px;
       padding: 14px 18px;
     }
+
     .modal-actions .btn-secondary {
       flex: 1;
       padding: 14px;
@@ -531,30 +680,6 @@
       line-height: 1.5;
     }
 
-    /* 演示入口 */
-    .demo-selector {
-      display: flex;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .demo-selector button {
-      flex: 1;
-      padding: 12px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
-      background: #fff;
-      font-size: 13px;
-      cursor: pointer;
-      color: var(--text-secondary);
-    }
-
-    .demo-selector button.active {
-      border-color: var(--black);
-      color: var(--text);
-      font-weight: 600;
-    }
-
     .hidden { display: none !important; }
   </style>
 </head>
@@ -562,59 +687,58 @@
   <div class="page">
     <!-- 用户信息 -->
     <div class="user-bar">
-      <div class="avatar">M</div>
-      <div class="user-info">
-        <h2>Max</h2>
-        <p>您尚未开通会籍，开通后可享无限次约课</p>
+      <div class="avatar">A</div>
+      <div class="user-meta">
+        <h2>Adam</h2>
+        <p>有效期至 2026/01/01<br/>下期将于 2026/02/01 自动续费</p>
       </div>
+      <button class="renew-btn">续费管理</button>
     </div>
 
     <!-- 会籍卡 -->
     <div class="card">
-      <div class="card-brand">SAVAGE <span>会籍卡</span></div>
+      <div class="card-brand">SAVAGE <span>会员卡</span></div>
       <div class="card-row">
         <div>
           <div class="card-label">已选套餐</div>
-          <div class="card-value">年卡月付</div>
-          <div class="card-label" style="margin-top: 16px;">有效期</div>
-          <div class="card-value">2026.06.17 起</div>
+          <div class="card-value" id="card-plan-name">单月购买</div>
+          <div class="card-label" style="margin-top: 20px;">有效期</div>
+          <div class="card-value" id="card-validity">30 天</div>
         </div>
-        <div class="card-price"><small>¥</small>499</div>
+        <div class="card-price"><small>¥</small><span id="card-price">19</span></div>
       </div>
     </div>
 
     <!-- 套餐选择 -->
     <div class="section">
       <h3 class="section-title">选择会籍性质</h3>
-      <div class="plan-options">
-        <div class="plan active" onclick="selectPlan(this)">
-          <div class="plan-badge">仅15.6元/天</div>
-          <div class="plan-price"><small>¥</small>499</div>
-          <div class="plan-name">年卡月付</div>
-          <div class="plan-check">✓</div>
-        </div>
-        <div class="plan" onclick="selectPlan(this)">
-          <div class="plan-price"><small>¥</small>599</div>
-          <div class="plan-name">连续包月</div>
-          <div class="plan-check"></div>
-        </div>
-        <div class="plan" onclick="selectPlan(this)">
-          <div class="plan-price"><small>¥</small>699</div>
-          <div class="plan-name">单月购买</div>
-          <div class="plan-check"></div>
-        </div>
-      </div>
-      <p class="section-desc">到期后按每月阶梯费用自动续费，可随时取消自动续费。（注：关闭后将解约且无法恢复续费状态）</p>
+      <div class="plan-options" id="plan-options"></div>
+      <p class="section-desc" id="plan-desc">到期后按每月¥30原价自动续费，可随时取消自动续费，优惠仅限1次，购买后立即生效。</p>
     </div>
 
-    <!-- 演示切换 -->
+    <!-- 会籍权益 -->
     <div class="section">
-      <h3 class="section-title">协议确认方案</h3>
-      <div class="demo-selector">
-        <button class="active" onclick="setMode('multi', this)">多协议 Tab</button>
-        <button onclick="setMode('single', this)">单协议滚动</button>
+      <div class="benefits-title-row">
+        <h3 id="benefits-title">单月购买</h3>
+        <span class="benefits-tag">专属权益</span>
       </div>
-      <p class="section-desc" id="mode-desc">多个协议横向并列，逐项阅读并同意，全部完成后才能开通。</p>
+      <div class="benefits-grid" id="benefits-grid"></div>
+    </div>
+
+    <!-- 权益横向对比 -->
+    <div class="compare-section">
+      <h3>权益对比</h3>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>权益</th>
+            <th id="col-0">单月购买</th>
+            <th id="col-1">连续包月</th>
+            <th id="col-2">年签月付</th>
+          </tr>
+        </thead>
+        <tbody id="compare-body"></tbody>
+      </table>
     </div>
   </div>
 
@@ -625,16 +749,16 @@
         <input type="checkbox" id="main-agree" />
         <label for="main-agree">
           阅读并确认
-          <a href="#" onclick="openCurrentMode(); return false;">《会员服务协议》</a>
+          <a href="#" onclick="openMultiAgreement(); return false;">《会员服务协议》</a>
           和
-          <a href="#" onclick="openCurrentMode(); return false;">《自动续费协议》</a>
+          <a href="#" onclick="openMultiAgreement(); return false;">《自动续费协议》</a>
         </label>
       </div>
-      <button class="btn-primary" id="open-btn" disabled onclick="openCurrentMode()">确认开通 ¥499.00</button>
+      <button class="btn-primary" id="open-btn" disabled onclick="openMultiAgreement()">确认开通 ¥19.00(已省¥11)</button>
     </div>
   </div>
 
-  <!-- 方案一：多协议 Modal -->
+  <!-- 多协议 Modal -->
   <div class="modal-overlay" id="modal-multi" onclick="closeOnBackdrop(event, 'modal-multi')">
     <div class="modal" onclick="event.stopPropagation()">
       <div class="modal-header">
@@ -647,104 +771,157 @@
         <div class="multi-progress-text" id="multi-progress-text">已同意 0/4 项协议</div>
         <div class="modal-actions">
           <button class="btn-secondary" id="multi-prev" onclick="prevTab()">取消</button>
-          <button class="btn-primary" id="multi-action" onclick="handleMultiAction()">我已阅读并同意《会员服务协议》</button>
+          <button class="btn-primary" id="multi-action" onclick="handleMultiAction()">同意《会员服务协议》</button>
         </div>
         <p class="notice" id="multi-notice">点击按钮即表示您已阅读并同意当前协议。</p>
       </div>
     </div>
   </div>
 
-  <!-- 方案二：单协议 Modal -->
-  <div class="modal-overlay" id="modal-single" onclick="closeOnBackdrop(event, 'modal-single')">
-    <div class="modal" onclick="event.stopPropagation()">
-      <div class="modal-header">
-        <h2 class="modal-title">请完整阅读《会员服务协议》</h2>
-      </div>
-      <div class="modal-body">
-        <div class="agreement-content" id="single-content" onscroll="checkScroll(this)">
-          <h4>会员服务协议</h4>
-          <p><strong>甲方（服务提供方）：</strong>SAVAGE 健身有限公司</p>
-          <p><strong>乙方（会员）：</strong>申请人本人</p>
-          <p>欢迎您申请开通 SAVAGE 会籍卡。为保障您的合法权益，请在开通前认真阅读本协议全部条款，特别是加粗显示的免责条款、限制条款及争议解决条款。您点击“同意”即视为已完整阅读并接受本协议全部内容。</p>
-          <p><strong>第一条 服务内容</strong></p>
-          <p>1.1 甲方依据您购买的会籍卡类型，向您提供健身场馆使用、团课预约、私教服务预约、储物柜使用等会员服务。具体服务范围以购买页面公示为准。</p>
-          <p>1.2 会籍卡仅限乙方本人使用，不得转借、转让、冒用。一经发现，甲方有权暂停或终止服务，且不予退款。</p>
-          <p>1.3 甲方保留因场馆维护、设备升级、不可抗力等原因临时调整服务时间或项目的权利，并将通过官方渠道提前通知乙方。</p>
-          <p><strong>第二条 费用与支付</strong></p>
-          <p>2.1 乙方应按照购买页面展示的价格及支付方式完成付款。付款成功后，会籍卡即时生效或按约定日期生效。</p>
-          <p>2.2 会籍卡一经售出，非因甲方原因不支持无理由退款。如因甲方原因导致无法提供服务，乙方可依据甲方公示的退款规则申请退款。</p>
-          <p>2.3 乙方授权甲方在会籍卡到期前，按照本协议约定通过乙方预留的支付渠道进行续费扣款（如开通自动续费）。乙方可在会籍到期前随时关闭自动续费功能。</p>
-          <p><strong>第三条 会员义务</strong></p>
-          <p>3.1 乙方应如实提供身份信息，并确保联系方式准确有效。因乙方信息错误导致无法接收通知的，由乙方自行承担相应后果。</p>
-          <p>3.2 乙方应遵守甲方场馆管理制度，爱护设施设备，服从工作人员合理安排。因乙方故意或重大过失造成甲方或第三方损失的，乙方应承担赔偿责任。</p>
-          <p>3.3 乙方应根据自身健康状况选择适宜的健身项目。患有心脏病、高血压、传染病、孕期或其他不适宜剧烈运动情形的人员，应在专业医生指导下参与运动，并自行承担运动风险。</p>
-          <p><strong>第四条 免责条款</strong></p>
-          <p>4.1 乙方充分了解健身运动具有一定风险，承诺在参加任何运动项目前评估自身健康状况，自愿承担因运动可能导致的身体不适、受伤等风险。</p>
-          <p>4.2 因不可抗力、政府行为、第三方原因或乙方自身原因导致的损失，甲方不承担赔偿责任，但甲方应积极协助乙方处理相关事宜。</p>
-          <p><strong>第五条 隐私保护</strong></p>
-          <p>5.1 甲方将按照法律法规及《隐私政策》的要求收集、使用和保护乙方的个人信息。未经乙方同意，甲方不会向第三方提供乙方的个人信息，但法律法规另有规定或乙方单独授权的除外。</p>
-          <p>5.2 乙方同意甲方为提供服务、进行会员管理及风险防控之目的，处理乙方的人脸识别、健康问卷、消费记录等必要信息。</p>
-          <p><strong>第六条 协议变更与终止</strong></p>
-          <p>6.1 甲方有权根据法律法规变化或业务调整需要修改本协议，修改后的协议将在官方渠道公示。乙方继续使用服务的，视为接受修改后的协议。</p>
-          <p>6.2 乙方违反本协议约定，甲方有权暂停或终止提供服务，并保留追究法律责任的权利。</p>
-          <p><strong>第七条 争议解决</strong></p>
-          <p>7.1 本协议的订立、执行和解释均适用中华人民共和国法律。</p>
-          <p>7.2 因本协议引起的或与本协议有关的任何争议，双方应友好协商解决；协商不成的，任何一方均可向甲方所在地有管辖权的人民法院提起诉讼。</p>
-          <p><strong>第八条 其他</strong></p>
-          <p>8.1 本协议自乙方点击“同意”之日起生效，至会籍卡有效期届满或本协议依法终止之日止。</p>
-          <p>8.2 本协议未尽事宜，以甲方公示的相关规则及双方另行签署的补充协议为准。</p>
-          <p style="text-align: center; color: var(--text-tertiary); margin-top: 24px;">—— 协议正文结束 ——</p>
-        </div>
-        <div class="scroll-hint" id="scroll-hint">
-          <span>⬇</span>
-          <span>请滑动阅读完整协议，到底部后“同意”才可用</span>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <div class="modal-agree">
-          <input type="checkbox" id="single-agree-check" disabled />
-          <label for="single-agree-check" id="single-agree-label">我已完整阅读并同意本协议</label>
-        </div>
-        <div class="modal-actions">
-          <button class="btn-secondary" onclick="closeModal('modal-single')">取消</button>
-          <button class="btn-primary" id="single-confirm" disabled onclick="confirmSingle()">确认开通</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script>
-    let currentMode = 'multi';
+    // ===================== 页面数据 =====================
+    const plans = [
+      {
+        id: 'single',
+        name: '单月购买',
+        price: 19,
+        originalPrice: 30,
+        discount: '已省¥11',
+        badge: null,
+        validity: '30 天',
+        desc: '到期后按每月¥30原价自动续费，可随时取消自动续费，优惠仅限1次，购买后立即生效。',
+        benefits: [
+          { icon: '👥', title: '团课权益', desc: '无限次约团课' },
+          { icon: '📍', title: '通用权益', desc: '全国门店通用' },
+          { icon: '🏷️', title: '折扣权益', desc: '训练营享折扣' }
+        ]
+      },
+      {
+        id: 'monthly',
+        name: '连续包月',
+        price: 599,
+        originalPrice: 30,
+        discount: '已优惠11元',
+        badge: '首次特惠',
+        validity: '30 天',
+        desc: '首次开通享特惠价，到期后按原价自动续费，可随时取消。',
+        benefits: [
+          { icon: '👥', title: '团课权益', desc: '无限次约团课' },
+          { icon: '📍', title: '通用权益', desc: '全国门店通用' },
+          { icon: '🏷️', title: '折扣权益', desc: '训练营享折扣' },
+          { icon: '🎁', title: '活动权益', desc: '专属活动权益' }
+        ]
+      },
+      {
+        id: 'yearly',
+        name: '年签月付',
+        price: 499,
+        originalPrice: 429,
+        discount: '已优惠30元',
+        badge: '仅1元/天',
+        validity: '365 天 / 期（月付）',
+        desc: '签约年卡按月付款，享受全年最完整权益，可随时取消自动续费。',
+        benefits: [
+          { icon: '👥', title: '团课权益', desc: '无限次约团课' },
+          { icon: '📍', title: '通用权益', desc: '全国门店通用' },
+          { icon: '🏷️', title: '折扣权益', desc: '训练营享折扣' },
+          { icon: '🎁', title: '活动权益', desc: '专属活动权益' },
+          { icon: '📉', title: '阶梯权益', desc: '阶梯式降价' },
+          { icon: '💳', title: '储值权益', desc: '储值享九五折' }
+        ]
+      }
+    ];
 
-    function setMode(mode, btn) {
-      currentMode = mode;
-      document.querySelectorAll('.demo-selector button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const desc = document.getElementById('mode-desc');
-      desc.textContent = mode === 'multi'
-        ? '多个协议横向并列，逐项阅读并同意，全部完成后才能开通。'
-        : '单协议长文本，必须滑动到最底部，“同意”按钮才可用。';
+    const allBenefitKeys = ['团课权益', '通用权益', '折扣权益', '活动权益', '阶梯权益', '储值权益'];
+    const benefitDescs = {
+      '团课权益': '无限次约团课',
+      '通用权益': '全国门店通用',
+      '折扣权益': '训练营享折扣',
+      '活动权益': '专属活动权益',
+      '阶梯权益': '阶梯式降价',
+      '储值权益': '储值享九五折'
+    };
+
+    let selectedPlan = 0;
+
+    function renderPlans() {
+      const container = document.getElementById('plan-options');
+      container.innerHTML = plans.map((plan, i) => {
+        const active = i === selectedPlan;
+        return `
+          <div class="plan ${active ? 'active' : ''}" onclick="selectPlan(${i})">
+            ${plan.badge ? `<div class="plan-badge">${plan.badge}</div>` : ''}
+            <div class="plan-check">${active ? '✓' : ''}</div>
+            <div class="plan-price-wrap">
+              <span class="plan-price"><small>¥</small>${plan.price}</span>
+            </div>
+            <div>
+              ${plan.originalPrice ? `<span class="plan-original">¥${plan.originalPrice}</span>` : ''}
+              <span class="plan-discount">${plan.discount}</span>
+            </div>
+            <div class="plan-name">${plan.name}</div>
+          </div>
+        `;
+      }).join('');
     }
 
-    function openCurrentMode() {
-      if (currentMode === 'multi') openMultiAgreement();
-      else openSingleAgreement();
+    function renderBenefits() {
+      const plan = plans[selectedPlan];
+      document.getElementById('benefits-title').textContent = plan.name;
+      document.getElementById('benefits-grid').innerHTML = plan.benefits.map(b => `
+        <div class="benefit-item">
+          <div class="benefit-icon">${b.icon}</div>
+          <div class="benefit-title">${b.title}</div>
+          <div class="benefit-desc">${b.desc}</div>
+        </div>
+      `).join('');
     }
 
-    function selectPlan(el) {
-      document.querySelectorAll('.plan').forEach(p => {
-        p.classList.remove('active');
-        p.querySelector('.plan-check').textContent = '';
-      });
-      el.classList.add('active');
-      el.querySelector('.plan-check').textContent = '✓';
+    function renderCompare() {
+      const tbody = document.getElementById('compare-body');
+      document.getElementById('col-0').className = selectedPlan === 0 ? 'active-col' : '';
+      document.getElementById('col-1').className = selectedPlan === 1 ? 'active-col' : '';
+      document.getElementById('col-2').className = selectedPlan === 2 ? 'active-col' : '';
+
+      tbody.innerHTML = allBenefitKeys.map(key => {
+        const cells = plans.map((plan, i) => {
+          const has = plan.benefits.some(b => b.title === key);
+          const active = i === selectedPlan;
+          return `<td class="${active ? 'active-col' : ''}">
+            <span class="${has ? 'yes' : 'no'}">${has ? '✓' : '—'}</span>
+          </td>`;
+        }).join('');
+        return `
+          <tr>
+            <td>${key}<br/><span style="color:var(--text-tertiary);font-size:11px;">${benefitDescs[key]}</span></td>
+            ${cells}
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function updatePage() {
+      const plan = plans[selectedPlan];
+      document.getElementById('card-plan-name').textContent = plan.name;
+      document.getElementById('card-validity').textContent = plan.validity;
+      document.getElementById('card-price').textContent = plan.price;
+      document.getElementById('plan-desc').textContent = plan.desc;
+      document.getElementById('open-btn').textContent = `确认开通 ¥${plan.price}.00(${plan.discount})`;
+      renderPlans();
+      renderBenefits();
+      renderCompare();
+    }
+
+    function selectPlan(i) {
+      selectedPlan = i;
+      updatePage();
     }
 
     document.getElementById('main-agree').addEventListener('change', function() {
       document.getElementById('open-btn').disabled = !this.checked;
     });
 
-    // ===================== 方案一：多协议 Tab =====================
+    // ===================== 多协议 Tab =====================
     const agreements = [
       {
         title: '会员服务协议',
@@ -865,7 +1042,7 @@
       actionBtn.classList.remove('done');
 
       if (allAgreed) {
-        actionBtn.textContent = '同意并开通 ¥499.00';
+        actionBtn.textContent = '同意并开通';
         actionBtn.disabled = false;
       } else if (checked) {
         actionBtn.textContent = `已同意《${agreements[currentTab].title}》`;
@@ -914,51 +1091,6 @@
       closeModal('modal-multi');
     }
 
-    // ===================== 方案二：单协议滚动 =====================
-    let singleScrolled = false;
-
-    function openSingleAgreement() {
-      singleScrolled = false;
-      const content = document.getElementById('single-content');
-      content.scrollTop = 0;
-      document.getElementById('single-agree-check').checked = false;
-      document.getElementById('single-agree-check').disabled = true;
-      document.getElementById('single-confirm').disabled = true;
-      updateScrollHint(false);
-      openModal('modal-single');
-    }
-
-    function checkScroll(el) {
-      const threshold = 5;
-      const reachedBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - threshold;
-      if (reachedBottom && !singleScrolled) {
-        singleScrolled = true;
-        document.getElementById('single-agree-check').disabled = false;
-        updateScrollHint(true);
-      }
-    }
-
-    function updateScrollHint(completed) {
-      const hint = document.getElementById('scroll-hint');
-      if (completed) {
-        hint.classList.add('completed');
-        hint.innerHTML = '<span>✓</span><span>已阅读至底部，现在可以勾选同意</span>';
-      } else {
-        hint.classList.remove('completed');
-        hint.innerHTML = '<span>⬇</span><span>请滑动阅读完整协议，到底部后“同意”才可用</span>';
-      }
-    }
-
-    document.getElementById('single-agree-check').addEventListener('change', function() {
-      document.getElementById('single-confirm').disabled = !this.checked;
-    });
-
-    function confirmSingle() {
-      if (!document.getElementById('single-agree-check').checked) return;
-      alert('协议已完整阅读并同意，会籍卡开通流程继续');
-      closeModal('modal-single');
-    }
-
     // ===================== 通用 Modal 控制 =====================
     function openModal(id) {
       const el = document.getElementById(id);
@@ -977,11 +1109,11 @@
     }
 
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        closeModal('modal-multi');
-        closeModal('modal-single');
-      }
+      if (e.key === 'Escape') closeModal('modal-multi');
     });
+
+    // 初始化
+    updatePage();
   </script>
 </body>
 </html>
