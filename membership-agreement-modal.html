@@ -495,6 +495,29 @@
       cursor: pointer;
     }
 
+    .multi-progress-text {
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .multi-progress-text strong {
+      color: var(--gold-dark);
+      font-weight: 600;
+    }
+
+    .btn-primary:disabled {
+      opacity: 1;
+      background: #f5f5f7;
+      color: var(--text-tertiary);
+      cursor: not-allowed;
+    }
+
+    .btn-primary.done {
+      background: var(--success);
+    }
+
     .notice {
       font-size: 11px;
       color: var(--text-tertiary);
@@ -616,15 +639,12 @@
       <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
       <div class="modal-body" id="multi-body"></div>
       <div class="modal-footer">
-        <div class="modal-agree">
-          <input type="checkbox" id="multi-agree-check" disabled />
-          <label for="multi-agree-check" id="multi-agree-label">我已阅读并同意当前协议</label>
-        </div>
+        <div class="multi-progress-text" id="multi-progress-text">已同意 0/4 项协议</div>
         <div class="modal-actions">
-          <button class="btn-secondary" onclick="closeModal('modal-multi')">取消</button>
-          <button class="btn-primary" id="multi-confirm" disabled onclick="confirmMulti()">确认开通</button>
+          <button class="btn-secondary" id="multi-prev" onclick="prevTab()">取消</button>
+          <button class="btn-primary" id="multi-action" onclick="handleMultiAction()">我已阅读并同意《会员服务协议》</button>
         </div>
-        <p class="notice">所有协议需全部同意后才能继续开通。未完整同意的协议将阻止开通流程。</p>
+        <p class="notice" id="multi-notice">点击按钮即表示您已阅读并同意当前协议。</p>
       </div>
     </div>
   </div>
@@ -829,29 +849,59 @@
       const allAgreed = agreements.every((_, i) => agreedSet.has(i));
       const progress = (agreedSet.size / agreements.length) * 100;
 
-      document.getElementById('multi-agree-check').checked = checked;
-      document.getElementById('multi-agree-check').disabled = false;
-      document.getElementById('multi-confirm').disabled = !allAgreed;
       document.getElementById('progress-bar').style.width = progress + '%';
+      document.getElementById('multi-progress-text').innerHTML =
+        `已同意 <strong>${agreedSet.size}</strong>/${agreements.length} 项协议`;
 
-      const label = document.getElementById('multi-agree-label');
-      label.textContent = checked
-        ? `我已阅读并同意《${agreements[currentTab].title}》`
-        : `我已阅读并同意《${agreements[currentTab].title}》`;
+      const prevBtn = document.getElementById('multi-prev');
+      prevBtn.textContent = currentTab === 0 ? '取消' : '上一步';
+
+      const actionBtn = document.getElementById('multi-action');
+      actionBtn.classList.remove('done');
+
+      if (allAgreed) {
+        actionBtn.textContent = '同意并开通 ¥499.00';
+        actionBtn.disabled = false;
+      } else if (checked) {
+        actionBtn.textContent = `已同意《${agreements[currentTab].title}》`;
+        actionBtn.disabled = true;
+        actionBtn.classList.add('done');
+      } else {
+        actionBtn.textContent = `我已阅读并同意《${agreements[currentTab].title}》`;
+        actionBtn.disabled = false;
+      }
     }
 
-    document.getElementById('multi-agree-check').addEventListener('change', function() {
-      if (this.checked) agreedSet.add(currentTab);
-      else agreedSet.delete(currentTab);
-      renderTabs();
-      updateMultiState();
-      if (this.checked) {
-        const next = agreements.findIndex((_, i) => !agreedSet.has(i));
-        if (next !== -1 && next !== currentTab) {
-          setTimeout(() => switchTab(next), 180);
-        }
+    function handleMultiAction() {
+      const allAgreed = agreements.every((_, i) => agreedSet.has(i));
+      if (allAgreed) {
+        alert('所有协议已同意，会籍卡开通流程继续');
+        closeModal('modal-multi');
+        return;
       }
-    });
+
+      agreedSet.add(currentTab);
+      renderTabs();
+
+      const next = agreements.findIndex((_, i) => !agreedSet.has(i));
+      if (next !== -1) {
+        currentTab = next;
+        renderTabs();
+        renderContent();
+      }
+      updateMultiState();
+    }
+
+    function prevTab() {
+      if (currentTab === 0) {
+        closeModal('modal-multi');
+      } else {
+        currentTab--;
+        renderTabs();
+        renderContent();
+        updateMultiState();
+      }
+    }
 
     function confirmMulti() {
       if (!agreements.every((_, i) => agreedSet.has(i))) return;
