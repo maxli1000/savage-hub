@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SAVAGE 教练端使用指南</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f5f6f7;
+      color: #1a1a1a;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap {
+      max-width: 480px;
+      margin: 0 auto;
+      background: #fff;
+      min-height: 100vh;
+      padding-bottom: 32px;
+    }
+
+    /* 顶部标题栏 */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .header-back {
+      position: absolute;
+      left: 8px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .header-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    /* 每个步骤 */
+    .step {
+      padding: 20px 16px;
+      border-bottom: 8px solid #f5f6f7;
+    }
+    .step:last-child {
+      border-bottom: none;
+    }
+
+    /* 步骤头部 */
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #2563eb;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    /* 入口标签 */
+    .entry-tag {
+      display: inline-flex;
+      align-items: center;
+      background: #eff6ff;
+      color: #2563eb;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+    .entry-tag::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #2563eb;
+      margin-right: 6px;
+    }
+
+    /* 步骤文字 */
+    .step-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #444;
+    }
+    .step-text p {
+      margin-bottom: 6px;
+    }
+    .step-text ol {
+      padding-left: 18px;
+      margin-bottom: 6px;
+    }
+    .step-text li {
+      margin-bottom: 3px;
+    }
+    .step-text ul {
+      padding-left: 16px;
+      margin-bottom: 6px;
+      list-style: none;
+    }
+    .step-text ul li {
+      position: relative;
+      padding-left: 12px;
+      margin-bottom: 3px;
+    }
+    .step-text ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #2563eb;
+    }
+
+    /* 左右布局（单图） */
+    .step-body {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .step-body .step-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* 多图横向排列 */
+    .shots-row {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* 截图容器 */
+    .shot-wrap {
+      width: 150px;
+      flex-shrink: 0;
+    }
+    .shots-row .shot-wrap {
+      width: 120px;
+    }
+    .shot-wrap img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      border: 1px solid #f0f0f0;
+      display: block;
+    }
+
+    /* 图片顶部文字提示 */
+    .shot-hint {
+      text-align: center;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 6px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    /* 注意事项 */
+    .tip {
+      margin-top: 12px;
+      padding: 10px 12px;
+      background: #fafafa;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #888;
+      line-height: 1.6;
+    }
+    .tip strong {
+      color: #666;
+    }
+
+    /* 前置使用说明 */
+    .notice-box {
+      margin: 16px;
+      padding: 14px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      font-size: 13px;
+      color: #1e40af;
+      line-height: 1.7;
+    }
+    .notice-box strong {
+      color: #1e3a8a;
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    /* 底部说明 */
+    .footer-note {
+      text-align: center;
+      padding: 20px 16px;
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    /* 响应式 */
+    @media (max-width: 360px) {
+      .step-body {
+        flex-direction: column;
+      }
+      .shot-wrap {
+        width: 180px;
+        margin: 0 auto;
+        order: -1;
+      }
+      .shots-row .shot-wrap {
+        width: 110px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- 顶部 -->
+    <div class="header">
+      <div class="header-back">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </div>
+      <div class="header-title">教练端使用指南</div>
+    </div>
+
+    <!-- 前置使用说明 -->
+    <div class="notice-box">
+      <strong>使用前须知</strong>
+      新教练使用教练端前请先完成 SAVAGE 客户端小程序的注册登录，未登录客户端将无法正常使用教练端功能。
+    </div>
+
+    <!-- 1. 排课报备 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div class="step-title">日程报备</div>
+      </div>
+      <div class="entry-tag">底部导航「报备」→ 单日 / 批量报备 → 添加报备</div>
+      <div class="step-text">
+        <ol>
+          <li>点击底部导航「报备」，选择「单日报备」或「批量报备」</li>
+          <li>选择需要报备的日期后，点击右下角「+」按钮添加报备</li>
+          <li>选择「可排课」或「不可排课」时间段，确认后提交</li>
+        </ol>
+      </div>
+      <div class="shots-row">
+        <div class="shot-wrap">
+          <div class="shot-hint">单日报备</div>
+          <img src="coach-daily-report.jpg" alt="单日报备">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">批量选择日期</div>
+          <img src="coach-batch-report.jpg" alt="批量报备">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">填写报备详情</div>
+          <img src="coach-report-detail.jpg" alt="填写报备详情">
+        </div>
+      </div>
+      <div class="tip"><strong>注意：</strong>每周一 23:59:59 之前需要完成下周报备，每周一晚上 20:00 会有短信提醒。</div>
+    </div>
+
+    <!-- 2. 查看/修改报备 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div class="step-title">查看 / 修改报备</div>
+      </div>
+      <div class="entry-tag">报备 → 批量按钮右侧「记录」→ 查看 / 修改</div>
+      <div class="step-text">
+        <ol>
+          <li>在报备页面，点击「批量」按钮右侧的「记录」按钮</li>
+          <li>进入查看报备记录列表，可查看历史报备内容</li>
+          <li>对于支持修改的查看报备记录，点击即可直接修改并重新提交</li>
+        </ol>
+      </div>
+      <div class="shots-row">
+        <div class="shot-wrap">
+          <div class="shot-hint">日程页面报备入口</div>
+          <img src="my-schedule-upcoming.jpg" alt="查看报备入口">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">查看报备记录</div>
+          <img src="coach-report-history.jpg" alt="查看报备记录">
+        </div>
+      </div>
+      <div class="tip"><strong>注意：</strong>部分已生效的报备可能不支持修改，如需调整请联系城市负责人。</div>
+    </div>
+
+    <!-- 3. 查看日程 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div class="step-title">查看日程</div>
+      </div>
+      <div class="entry-tag">底部导航「日程」→ 切换周视图 / 月视图</div>
+      <div class="step-text">
+        <ol>
+          <li>打开教练端小程序，默认进入「日程」页面</li>
+          <li>点击顶部「周 / 月」按钮，切换周视图或月视图</li>
+          <li>左右滑动日期栏，或点击具体日期，查看单日或单次课程安排</li>
+        </ol>
+      </div>
+      <div class="shots-row">
+        <div class="shot-wrap">
+          <div class="shot-hint">周/月视图切换</div>
+          <img src="coach-schedule-view.jpg" alt="日程视图">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">单日课程列表</div>
+          <img src="coach-schedule-list.jpg" alt="日程列表">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">课程待开课</div>
+          <img src="coach-schedule-upcoming.jpg" alt="日程待开课">
+        </div>
+      </div>
+      <div class="tip"><strong>提示：</strong>日程中可查看课程的上课时间、地点、学员预约及签到情况。</div>
+    </div>
+
+    <!-- 4. 查看课程详情 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div class="step-title">查看课程详情</div>
+      </div>
+      <div class="entry-tag">日程 → 点击任意课程卡片</div>
+      <div class="step-text">
+        <ol>
+          <li>在日程列表中，点击需要查看的课程卡片</li>
+          <li>进入课程详情页，查看课程信息与学员预约/签到情况</li>
+          <li>下滑查看学员名单，可切换查看「约课」和「签到」学员</li>
+        </ol>
+      </div>
+      <div class="shots-row">
+        <div class="shot-wrap">
+          <div class="shot-hint">课程详情</div>
+          <img src="coach-course-detail.jpg" alt="课程详情">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">课后返图与学员名单</div>
+          <img src="coach-course-detail-feedback.jpg" alt="课程详情返图">
+        </div>
+      </div>
+      <div class="tip"><strong>提示：</strong>课程详情页右上角支持分享课程海报，方便推广。</div>
+    </div>
+
+    <!-- 5. 课后上传合照 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">5</div>
+        <div class="step-title">课后上传合照</div>
+      </div>
+      <div class="entry-tag">日程 → 已完课课程卡片 → 上传合照 / 服务通知消息卡片</div>
+      <div class="step-text">
+        <p><strong>方式一：从日程上传</strong></p>
+        <ol>
+          <li>在日程列表中找到已完课的课程卡片</li>
+          <li>点击卡片上的「上传合照」按钮，进入课程详情页</li>
+          <li>在「课后返图与学员名单」区域，点击「上传照片」，选择课程合照并提交</li>
+        </ol>
+        <p style="margin-top:6px;"><strong>方式二：从服务通知上传</strong></p>
+        <ol>
+          <li>课程结束后，收到小程序发送的「上传合照」服务通知</li>
+          <li>点击消息卡片，直接进入对应课程的详情页</li>
+          <li>在「课后返图与学员名单」区域，点击「上传照片」，选择课程合照并提交</li>
+        </ol>
+      </div>
+      <div class="shots-row">
+        <div class="shot-wrap">
+          <div class="shot-hint">日程点击「上传合照」</div>
+          <img src="coach-schedule-completed.jpg" alt="已完课日程点击「上传合照」">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">课程详情页上传</div>
+          <img src="coach-course-detail-feedback.jpg" alt="课后返图与学员名单上传">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">点击消息卡片进入</div>
+          <img src="coach-upload-photo.jpg" alt="上传合照提醒">
+        </div>
+      </div>
+      <div class="tip"><strong>注意：</strong>课程结束后请及时上传合照；如未及时处理，系统会通过服务通知再次提醒。</div>
+    </div>
+
+    <!-- 6. 查看个人资料预览 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">6</div>
+        <div class="step-title">查看个人资料预览</div>
+      </div>
+      <div class="entry-tag">底部导航「工作台」→「个人资料预览」</div>
+      <div class="step-text">
+        <ol>
+          <li>点击底部导航「工作台」，进入工作台首页</li>
+          <li>点击「个人资料预览」，查看自己的教练信息</li>
+          <li>个人资料预览目前仅支持预览，如需修改请联系城市负责人</li>
+        </ol>
+      </div>
+      <div class="shots-row">
+        <div class="shot-wrap">
+          <div class="shot-hint">工作台</div>
+          <img src="coach-dashboard.jpg" alt="工作台">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">个人资料预览</div>
+          <img src="coach-profile.jpg" alt="个人资料预览">
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. 分享日程安排 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">7</div>
+        <div class="step-title">分享日程安排</div>
+      </div>
+      <div class="entry-tag">日程 → 切换视图 → 右上角「分享」</div>
+      <div class="step-text">
+        <ol>
+          <li>进入「日程」页面，切换到需要分享的视图（周视图 / 月视图 / 单次课）</li>
+          <li>点击右上角「分享」按钮</li>
+          <li>生成课程分享海报预览，可保存图片或转发给微信好友 / 朋友圈</li>
+        </ol>
+      </div>
+      <div class="shots-row">
+        <div class="shot-wrap">
+          <div class="shot-hint">日程页面点击分享</div>
+          <img src="coach-schedule-view.jpg" alt="日程页面点击分享">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">分享海报预览</div>
+          <img src="coach-course-share.jpg" alt="课程分享海报预览">
+        </div>
+      </div>
+      <div class="tip"><strong>提示：</strong>分享海报预览可帮助吸引学员预约课程，建议每次排课后及时分享。</div>
+    </div>
+
+    <!-- 8. 消息通知 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">8</div>
+        <div class="step-title">消息通知</div>
+      </div>
+      <div class="entry-tag">工作台 →「消息通知」/「通知中心」</div>
+      <div class="step-text">
+        <ol>
+          <li>在工作台页面点击「消息通知」，进入通知中心查看最新消息</li>
+          <li>点击「消息通知管理」，可设置接收通知的类型与方式</li>
+          <li>重要通知（如课程提醒、上传合照提醒）将通过微信服务通知推送</li>
+        </ol>
+      </div>
+      <div class="shots-row">
+        <div class="shot-wrap">
+          <div class="shot-hint">工作台</div>
+          <img src="coach-dashboard.jpg" alt="工作台">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">通知中心</div>
+          <img src="coach-notice-center.jpg" alt="通知中心">
+        </div>
+        <div class="shot-wrap">
+          <div class="shot-hint">消息通知管理</div>
+          <img src="coach-notification-mgmt.jpg" alt="消息通知管理">
+        </div>
+      </div>
+      <div class="tip"><strong>提示：</strong>建议开启所有教学相关通知，避免遗漏课程安排与重要提醒。</div>
+    </div>
+
+    <div class="footer-note">
+      本指南覆盖 SAVAGE 教练端最常用的 8 项操作<br>其他功能可在小程序内按需探索
+    </div>
+
+  </div>
+</body>
+</html>
