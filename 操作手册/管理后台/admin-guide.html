@@ -504,6 +504,7 @@
     <a class="nav-item" href="#course-offline">课程异常下线处理</a>
     <a class="nav-item" href="#course-booking-detail">查看课程预约详情</a>
     <a class="nav-item" href="#store-setup">门店信息维护</a>
+    <a class="nav-item" href="#remote-door">远程开门</a>
     <a class="nav-item" href="#coach-add">添加教练与配置薪酬</a>
     <a class="nav-item" href="#card-times">创建次卡产品</a>
     <a class="nav-item" href="#card-coupon">创建优惠券</a>
@@ -532,7 +533,7 @@
     <p>管理后台使用手册 — 聚焦业务问题，快速找到「这个问题怎么办」</p>
     <div class="meta">
       <span>📅 2026-06-09</span>
-      <span>📄 共 15 个核心场景</span>
+      <span>📄 共 16 个核心场景</span>
       <span>🖼️ 图文结合</span>
     </div>
   </div>
@@ -1261,6 +1262,70 @@
     <div class="tip tip-success"><strong>开业流程：</strong>装修中 → 完成教室/门禁/教练配置 → 上传课程排期 → 门店状态改为「营业中」→ 小程序端即可预约。</div>
   </section>
 
+  <!-- ==================== 远程开门 ==================== -->
+  <span class="anchor" id="remote-door"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">🚪</span> 远程开门</h2>
+      <p>适用于：用户忘带手机、会员到店无法扫码、紧急情况等需要后台远程开启门店门禁的场景。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>门店管理</strong> <span>→</span> <strong>门禁管理</strong> <span>→</span> <strong>选择目标设备 → 远程开门</strong></div>
+
+    <div class="card">
+      <div class="card-header"><span class="tag tag-urgent">涉及安全</span><h3>开门前确认</h3></div>
+      <div class="card-body">
+        <p>远程开门会直接影响门店物理安全，执行前务必确认：</p>
+        <ul>
+          <li>✅ 请求开门人员身份真实（会员/教练/工作人员）</li>
+          <li>✅ 开门原因合理（如用户忘带手机、设备故障等）</li>
+          <li>✅ 目标门店和门禁设备选择正确</li>
+        </ul>
+        <div class="tip tip-danger"><strong>重要提醒：</strong>严禁在未核实身份的情况下远程开门。所有远程开门操作均记录日志，包括操作人、原因和执行时间。</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 1：进入门禁管理找到目标设备</h3></div>
+      <div class="card-body">
+        <p>进入 <strong>门店管理 → 门禁管理</strong>，通过门店、设备名称、门禁类型等条件筛选，定位到需要远程开启的门禁设备。</p>
+      </div>
+    </div>
+
+    <div class="screenshot">
+      <img src="远程开门指引.png" alt="远程开门">
+      <div class="screenshot-caption">图 6-4：远程开门 — 门禁设备远程开门操作界面</div>
+    </div>
+    <div class="tip"><strong>图中关键操作点：</strong>① 确认目标门店和设备名称；② 点击「远程开门」按钮；③ 填写开门原因后提交。</div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 2：执行远程开门</h3></div>
+      <div class="card-body">
+        <p>点击「远程开门」后，按提示填写信息并确认：</p>
+        <ol>
+          <li>选择或填写<strong>开门原因</strong>（如会员忘带手机、设备故障、紧急情况等）</li>
+          <li>核对目标<strong>门店和门禁设备</strong>是否正确</li>
+          <li>点击「确认开门」，设备收到指令后执行开门动作</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 3：查看开门记录</h3></div>
+      <div class="card-body">
+        <p>开门完成后，可在门禁设备的<strong>通行日志</strong>中查看本次远程开门记录，包含：</p>
+        <ul>
+          <li><strong>开门时间</strong>：操作执行的精确时间</li>
+          <li><strong>操作人</strong>：执行远程开门的后台账号</li>
+          <li><strong>开门原因</strong>：提交时填写的原因</li>
+        </ul>
+        <div class="tip tip-success"><strong>最佳实践：</strong>建议远程开门后同步告知门店前台或现场工作人员，确认人员已正常进入，避免重复开门或误操作。</div>
+      </div>
+    </div>
+
+    <div class="tip tip-warning"><strong>注意事项：</strong>远程开门操作不可撤销，执行前请再次确认身份和设备。如遇频繁异常开门请求，请及时上报门店负责人排查。</div>
+  </section>
+
   <span class="anchor" id="coach-add"></span>
   <section class="section">
     <div class="section-header">
@@ -1653,7 +1718,7 @@
   <!-- Footer -->
   <section class="section" style="text-align:center; padding: 40px; color: var(--text-muted); border-top: 1px solid var(--border);">
     <p>— 本手册由 SAVAGE 运营团队维护 —</p>
-    <p style="font-size: 13px; margin-top: 8px;">最后更新：2026-07-07 | 版本 v1.3 | 共 15 个核心场景 |  | <a href="#feedback">提交反馈</a></p>
+    <p style="font-size: 13px; margin-top: 8px;">最后更新：2026-07-07 | 版本 v1.3 | 共 16 个核心场景 |  | <a href="#feedback">提交反馈</a></p>
   </section>
 
 </main>
