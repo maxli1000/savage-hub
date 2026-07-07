@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -498,10 +499,11 @@
 
   <div class="nav-group">
     <div class="nav-group-title">运营</div>
-    <a class="nav-item" href="#daily-dashboard">查看每日经营数据</a>
     <a class="nav-item" href="#daily-report">报表查看</a>
     <a class="nav-item" href="#course-create">新建一门课程</a>
     <a class="nav-item" href="#course-schedule">如何进行排课</a>
+    <a class="nav-item" href="#course-offline">课程异常下线处理</a>
+    <a class="nav-item" href="#course-booking-detail">查看课程预约详情</a>
     <a class="nav-item" href="#store-setup">门店信息维护</a>
     <a class="nav-item" href="#coach-add">添加教练与配置薪酬</a>
     <a class="nav-item" href="#card-times">创建次卡产品</a>
@@ -531,7 +533,7 @@
     <p>管理后台使用手册 — 聚焦业务问题，快速找到「这个问题怎么办」</p>
     <div class="meta">
       <span>📅 2026-06-09</span>
-      <span>📄 共 14 个核心场景</span>
+      <span>📄 共 15 个核心场景</span>
       <span>🖼️ 图文结合</span>
     </div>
   </div>
@@ -556,7 +558,6 @@
       <div class="quickstart-card">
         <h4>📊 运营人员</h4>
         <ol>
-          <li><a href="#daily-dashboard">查看每日经营数据</a> — 晨会数据</li>
           <li><a href="#daily-report">报表查看</a> — 运营日报/周报/月报</li>
           <li><a href="#course-schedule">如何进行排课</a> — 每周固定工作</li>
           <li><a href="#card-times">创建次卡产品</a> / <a href="#card-coupon">创建优惠券</a> — 营销活动配置</li>
@@ -693,11 +694,11 @@
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0;">
       <div class="screenshot" style="margin: 0;">
-        <img src="screenshots/课程退款.png" alt="课程退款">
+        <img src="课程退款.png" alt="课程退款">
         <div class="screenshot-caption">图 2-1-1：课程退款 — 预约记录 → 处理预约 → 退款</div>
       </div>
       <div class="screenshot" style="margin: 0;">
-        <img src="screenshots/06-订单管理.png" alt="订单详情">
+        <img src="06-订单管理.png" alt="订单详情">
         <div class="screenshot-caption">图 2-1-2：次卡/会籍卡退款 — 订单商品明细退款入口</div>
       </div>
     </div>
@@ -739,7 +740,7 @@
     
 
     <div class="screenshot">
-      <img src="screenshots/26-发票申请详情.png" alt="发票申请详情">
+      <img src="26-发票申请详情.png" alt="发票申请详情">
       <div class="screenshot-caption">图 3-2：发票申请详情 — 申请信息与发票文件预览</div>
     </div>
     <div class="tip"><strong>图中关键操作点：</strong>① 核对「发票抬头」和「企业税号」是否与用户提交一致；② 点击「上传发票」上传税务系统开具的 PDF/图片；③ 如信息有误，点击「驳回」并填写具体原因。</div>
@@ -766,7 +767,7 @@
     
 
     <div class="screenshot">
-      <img src="screenshots/03-用户列表.png" alt="用户列表">
+      <img src="03-用户列表.png" alt="用户列表">
       <div class="screenshot-caption">图 4-1：用户列表 — 支持多维度搜索，列表可直接查看资产概览</div>
     </div>
     <div class="tip"><strong>图中关键操作点：</strong>① 搜索框支持昵称/手机号/用户ID模糊搜索；② 「资产信息」列可直接查看次卡剩余次数、优惠券张数；③ 勾选多用户后可点击「批量添加标签」。</div>
@@ -785,7 +786,7 @@
       </div>
     </div>
     <div class="screenshot">
-      <img src="screenshots/04-用户详情-基本信息.png" alt="用户详情-资产管理">
+      <img src="04-用户详情-基本信息.png" alt="用户详情-资产管理">
       <div class="screenshot-caption">图 4-2：用户详情 — 资产管理页</div>
     </div>
 
@@ -812,13 +813,13 @@
     </div>
 
     <div class="screenshot">
-      <img src="screenshots/用户违规处理.png" alt="用户违规处理">
+      <img src="用户违规处理.png" alt="用户违规处理">
       <div class="screenshot-caption">图 4-3：用户违规处理 — 违规行为记录与证据</div>
     </div>
     
 
     <div class="screenshot">
-      <img src="screenshots/封禁用户.png" alt="封禁用户">
+      <img src="封禁用户.png" alt="封禁用户">
       <div class="screenshot-caption">图 4-4：封禁管理 — 封禁/解封操作界面</div>
     </div>
     <div class="tip"><strong>图中关键操作点：</strong>① 在「封禁管理」标签页查看历史违规记录；② 点击「封禁账号」选择封禁原因与时长；③ 非永久封禁到期后系统自动解封，也可手动提前解封。</div>
@@ -827,34 +828,6 @@
   </section>
 
   <!-- ==================== 运营模块 ==================== -->
-  <span class="anchor" id="daily-dashboard"></span>
-  <section class="section">
-    <div class="section-header">
-      <h2><span class="icon">📊</span> 如何查看数据看板</h2>
-      <p>适用于：每日晨会前、每周复盘时，快速掌握门店经营全貌。</p>
-    </div>
-
-    <div class="path">📍 操作路径：<strong>数据概况</strong> <span>→</span> <strong>运营中心</strong></div>
-
-    <div class="card">
-      <div class="card-header"><span class="tag tag-daily">每日必看</span><h3>Step 1：运营中心</h3></div>
-      <div class="card-body">
-        <p>点击<strong>数据概况 → 运营中心</strong>查看，顶部数据卡展示核心指标：</p>
-        <ul>
-          <li><strong>今日营收</strong>：当日总收入及环比变化</li>
-          <li><strong>活跃用户</strong>：当日活跃用户数及本月新增人数</li>
-          <li><strong>课程完成率</strong>：已完课数 ÷ 总排课数</li>
-          <li><strong>会员续费率</strong>：会员续费率及月度变化</li>
-        </ul>
-        <p style="margin-top:10px;">下方图表可切换「<strong>7天 / 30天 / 90天</strong>」营收趋势，右侧展示<strong>门店营收排名</strong>，快速定位业绩异常门店。</p>
-        <div class="tip"><strong>提示：</strong>点击「导出报表」可导出 Excel；点击「大屏展示」可切换全屏看板，适合会议室投影。</div>
-      </div>
-    </div>
-    
-
-    <div class="tip tip-success"><strong>最佳实践：</strong>建议每日 9:00 前查看运营中心，重点关注「今日待履约」和「异常待处理」模块，提前安排应对。</div>
-  </section>
-
   <span class="anchor" id="daily-report"></span>
   <section class="section">
     <div class="section-header">
@@ -876,8 +849,8 @@
       </div>
     </div>
     <div class="screenshot">
-      <img src="screenshots/数据概况-运营报表.png" alt="运营报表">
-      <div class="screenshot-caption">图 3-3：运营报表 — 数据概况与核心指标分析</div>
+      <img src="数据概况-新运营报表.png" alt="新运营报表">
+      <div class="screenshot-caption">图 3-3：新运营报表 — 数据概况与核心指标分析</div>
     </div>
 
     <div class="card">
@@ -892,8 +865,24 @@
       </div>
     </div>
     <div class="screenshot">
-      <img src="screenshots/数据概况-财务报表.png" alt="财务报表">
-      <div class="screenshot-caption">图 3-4：财务报表 — 营收数据与财务分析</div>
+      <img src="数据概况-新财务报表.png" alt="新财务报表">
+      <div class="screenshot-caption">图 3-4：新财务报表 — 营收数据与财务分析</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>查看会籍卡数据</h3></div>
+      <div class="card-body">
+        <p>进入 <strong>数据概况 → 会籍卡</strong>：</p>
+        <ul>
+          <li>查看<strong>会籍卡概览</strong>，了解会籍用户数、续费率、各类型会籍卡占比等核心指标</li>
+          <li>按城市、门店、时间维度下钻分析</li>
+          <li>关注核心指标：新增会籍用户、续费率、流失率、会籍收入贡献</li>
+        </ul>
+      </div>
+    </div>
+    <div class="screenshot">
+      <img src="数据概况-会籍卡.png" alt="会籍卡">
+      <div class="screenshot-caption">图 3-5：会籍卡数据 — 会籍概览与核心指标分析</div>
     </div>
   </section>
 
@@ -922,7 +911,7 @@
       </div>
     </div>
     <div class="screenshot">
-      <img src="screenshots/07-类目管理.png" alt="类目管理">
+      <img src="07-类目管理.png" alt="类目管理">
       <div class="screenshot-caption">图 5-1：类目管理 — 课程分类配置</div>
     </div>
 
@@ -940,7 +929,7 @@
     
 
     <div class="screenshot">
-      <img src="screenshots/09-排课条目管理.png" alt="新建排课条目">
+      <img src="09-排课条目管理.png" alt="新建排课条目">
       <div class="screenshot-caption">图 5-2：新建排课条目 — 课程基础属性配置</div>
     </div>
     <div class="tip"><strong>图中关键操作点：</strong>① 「课程类目」必须选择已启用的类目，否则小程序端无法筛选；② 「按教室配置容量」可为不同门店/教室分别设置人数上限；③ 填写完成后点击「保存」，状态为「草稿」，需手动点击「启用」。</div>
@@ -953,7 +942,7 @@
       </div>
     </div>
     <div class="screenshot">
-      <img src="screenshots/08-媒体模板管理.png" alt="媒体模板管理">
+      <img src="08-媒体模板管理.png" alt="媒体模板管理">
       <div class="screenshot-caption">图 5-3：媒体模板管理 — 课程内容素材配置（分组折叠展示）</div>
     </div>
 
@@ -1051,11 +1040,11 @@
       </div>
     </div>
     <div class="screenshot">
-      <img src="screenshots/排课.png" alt="排课管理">
+      <img src="排课.png" alt="排课管理">
       <div class="screenshot-caption">图 5-3：排课管理 — 排课操作界面</div>
     </div>
     <div class="screenshot">
-      <img src="screenshots/排课-上架课程.png" alt="上架课程">
+      <img src="排课-上架课程.png" alt="上架课程">
       <div class="screenshot-caption">图 5-3-2：排课管理 — 上架课程操作界面</div>
     </div>
 
@@ -1074,16 +1063,132 @@
     </div>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0;">
       <div class="screenshot" style="margin: 0;">
-        <img src="screenshots/复制课表-入口.png" alt="复制课表入口">
+        <img src="复制课表-入口.png" alt="复制课表入口">
         <div class="screenshot-caption">图 5-4-1：复制课表 — 入口位置</div>
       </div>
       <div class="screenshot" style="margin: 0;">
-        <img src="screenshots/复制课表.png" alt="复制课表">
+        <img src="复制课表.png" alt="复制课表">
         <div class="screenshot-caption">图 5-4-2：复制课表 — 选择源周期与目标周期</div>
       </div>
     </div>
 
     <div class="tip tip-warning"><strong>注意事项：</strong>已有人预约的课程不可随意取消或修改时间，如需调整需提前通知已预约用户并协助改签。</div>
+  </section>
+
+  <!-- ==================== 课程异常下线处理 ==================== -->
+  <span class="anchor" id="course-offline"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">🚨</span> 课程异常下线处理</h2>
+      <p>适用于：教练临时请假、场地不可用、人数不足等突发情况，需要对已发布的课程进行紧急下线处理。客服 / 运营均可按此流程操作。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>课程管理 → 团体课 → 排课管理</strong> <span>→</span> <strong>找到目标课程 → 异常下线</strong></div>
+
+    <div class="card">
+      <div class="card-header"><span class="tag tag-urgent">谨慎操作</span><h3>下线前确认</h3></div>
+      <div class="card-body">
+        <p>执行异常下线前，请确认以下信息，避免误操作影响用户体验：</p>
+        <ul>
+          <li>✅ 确认目标课程及上课时段无误</li>
+          <li>✅ 确认已预约用户名单，必要时提前通知用户</li>
+          <li>✅ 确认是否需要同步执行退款或改签（用户已付费的课程下线后应及时处理）</li>
+        </ul>
+        <div class="tip tip-danger"><strong>重要提醒：</strong>异常下线会直接取消该课程的预约入口，已预约用户将收到课程取消通知。涉及已付费用户的课程，必须同步安排退款或改签。</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 1：进入排课管理找到目标课程</h3></div>
+      <div class="card-body">
+        <p>进入 <strong>课程管理 → 团体课 → 排课管理</strong>，通过门店、教室、日期、课程名称等条件筛选，定位到需要下线的课程排课。</p>
+      </div>
+    </div>
+
+    <div class="screenshot">
+      <img src="异常下线入口.png" alt="异常下线入口">
+      <div class="screenshot-caption">图 5-5：异常下线入口 — 在排课管理中找到目标课程</div>
+    </div>
+    <div class="tip"><strong>图中关键操作点：</strong>① 通过筛选条件快速定位目标课程；② 在操作列找到「异常下线」入口。</div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 2：执行异常下线</h3></div>
+      <div class="card-body">
+        <p>点击「异常下线」后，按提示填写下线原因并确认：</p>
+        <ol>
+          <li>选择或填写<strong>下线原因</strong>（如教练请假、场地故障、人数不足等）</li>
+          <li>确认下线影响范围（单次课程 / 系列课程）</li>
+          <li>点击「确认下线」，系统取消该课程并通知已预约用户</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="screenshot">
+      <img src="异常下线操作.png" alt="异常下线操作">
+      <div class="screenshot-caption">图 5-6：异常下线操作 — 填写原因并确认下线</div>
+    </div>
+    <div class="tip"><strong>图中关键操作点：</strong>① 选择准确的下线原因，便于后续统计；② 确认影响范围后提交；③ 系统会自动向已预约用户发送取消通知。</div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 3：后续处理</h3></div>
+      <div class="card-body">
+        <p>课程下线后，根据用户付费情况及时处理后续事宜：</p>
+        <ul>
+          <li><strong>已付费课程</strong>：课程取消后 30 分钟内为用户办理退款，或协助改约其他时段/课程</li>
+          <li><strong>次卡/会籍卡预约</strong>：预约次数自动返还，无需额外操作</li>
+          <li><strong>记录与同步</strong>：在客服工单或运营群中同步下线原因及处理结果</li>
+        </ul>
+        <div class="tip tip-success"><strong>最佳实践：</strong>建议异常下线后 30 分钟内完成用户通知与退款/改签处理，降低投诉风险。</div>
+      </div>
+    </div>
+
+    <div class="tip tip-warning"><strong>注意事项：</strong>异常下线操作会记录操作日志，不可撤销。请确保原因真实、处理及时，避免重复下线或误下线。</div>
+  </section>
+
+  <!-- ==================== 查看课程预约详情 ==================== -->
+  <span class="anchor" id="course-booking-detail"></span>
+  <section class="section">
+    <div class="section-header">
+      <h2><span class="icon">👥</span> 查看课程预约详情</h2>
+      <p>适用于：客服处理用户咨询、运营核对约课数据、门店准备上课名单时，查看某节课的预约/占位明细。</p>
+    </div>
+
+    <div class="path">📍 操作路径：<strong>课程管理 → 团体课 → 排课管理</strong> <span>→</span> <strong>找到目标课程 → 预约详情</strong></div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 1：进入排课管理找到目标课程</h3></div>
+      <div class="card-body">
+        <p>进入 <strong>课程管理 → 团体课 → 排课管理</strong>，通过门店、教室、日期、课程名称等条件筛选，定位到需要查看的课程。</p>
+      </div>
+    </div>
+
+    <div class="screenshot">
+      <img src="预约详情入口.png" alt="预约详情入口">
+      <div class="screenshot-caption">图 5-7：预约详情入口 — 在排课管理中找到目标课程</div>
+    </div>
+    <div class="tip"><strong>图中关键操作点：</strong>① 通过筛选条件定位目标课程；② 在操作列点击「预约详情」查看该课程的用户预约与占位情况。</div>
+
+    <div class="card">
+      <div class="card-header"><h3>Step 2：查看预约 / 占位详情</h3></div>
+      <div class="card-body">
+        <p>进入预约详情页后，可查看该节课的完整预约数据：</p>
+        <ul>
+          <li><strong>已预约用户</strong>：用户昵称、手机号（脱敏）、预约渠道、预约时间、使用卡券类型</li>
+          <li><strong>占位用户</strong>：显示占位未正式预约的用户，便于客服跟进转化</li>
+          <li><strong>签到状态</strong>：已签到 / 未签到 / 已取消等状态分布</li>
+          <li><strong>容量情况</strong>：当前预约人数 / 课程容量上限</li>
+        </ul>
+        <p style="margin-top:8px;">支持按状态筛选、导出名单，方便门店前台核对上课人员。</p>
+      </div>
+    </div>
+
+    <div class="screenshot">
+      <img src="预约:占位详情.png" alt="预约/占位详情">
+      <div class="screenshot-caption">图 5-8：预约/占位详情 — 用户预约与占位明细</div>
+    </div>
+    <div class="tip"><strong>图中关键操作点：</strong>① 查看「已预约」与「占位」两个标签页；② 可查看用户预约渠道与使用卡券；③ 支持导出名单用于门店签到核对。</div>
+
+    <div class="tip tip-success"><strong>最佳实践：</strong>上课前 1 小时建议导出预约名单给门店前台；遇到用户咨询时，优先通过此页面核对预约状态与卡券使用情况。</div>
   </section>
 
   <!-- ==================== 门店与教练 ==================== -->
@@ -1111,7 +1216,7 @@
       </div>
     </div>
     <div class="screenshot">
-      <img src="screenshots/10-门店列表.png" alt="新增门店">
+      <img src="10-门店列表.png" alt="新增门店">
       <div class="screenshot-caption">图 6-1：新增门店 — 门店信息录入</div>
     </div>
 
@@ -1131,7 +1236,7 @@
     
 
     <div class="screenshot">
-      <img src="screenshots/11-新建教室.png" alt="新增教室">
+      <img src="11-新建教室.png" alt="新增教室">
       <div class="screenshot-caption">图 6-2：新增教室 — 教室信息录入</div>
     </div>
     <div class="tip"><strong>图中关键操作点：</strong>① 「容纳人数」决定该教室排课时的最大容量上限；② 设施设备支持勾选预设项 + 底部自定义输入；③ 教室图片为必填项，建议上传高清实景图。</div>
@@ -1150,7 +1255,7 @@
       </div>
     </div>
     <div class="screenshot">
-      <img src="screenshots/12-门禁设备.png" alt="新增门禁">
+      <img src="12-门禁设备.png" alt="新增门禁">
       <div class="screenshot-caption">图 6-3：新增门禁设备 — 设备信息录入</div>
     </div>
 
@@ -1179,7 +1284,7 @@
       </div>
     </div>
     <div class="screenshot">
-      <img src="screenshots/13-教练列表.png" alt="教练列表">
+      <img src="13-教练列表.png" alt="教练列表">
       <div class="screenshot-caption">图 7-1：教练列表 — 全量教练档案</div>
     </div>
 
@@ -1197,13 +1302,13 @@
       </div>
     </div>
     <div class="screenshot">
-      <img src="screenshots/教练课时费通用配置.png" alt="教练课时费通用配置">
+      <img src="教练课时费通用配置.png" alt="教练课时费通用配置">
       <div class="screenshot-caption">图 7-2：教练课时费 — 通用配置（基础课时费与提成比例）</div>
     </div>
     
 
     <div class="screenshot">
-      <img src="screenshots/教练课时费个性配置.png" alt="教练课时费个性配置">
+      <img src="教练课时费个性配置.png" alt="教练课时费个性配置">
       <div class="screenshot-caption">图 7-3：教练课时费 — 个性配置（类目特殊规则）</div>
     </div>
     <div class="tip"><strong>图中关键操作点：</strong>① 「通用配置」设置团体课/私教课/训练营的基础课时费与提成比例；② 「个性配置」针对特定课程设置差异化薪酬规则（如瑜伽课保底金额）；③ 同一教练可设置多条类目特殊规则，系统按日期自动匹配。</div>
@@ -1244,7 +1349,7 @@
       </div>
     </div>
     <div class="screenshot">
-      <img src="screenshots/18-次卡模板详情.png" alt="次卡模板详情">
+      <img src="18-次卡模板详情.png" alt="次卡模板详情">
       <div class="screenshot-caption">图 9-1：次卡模板详情 — 转赠规则与卡面配置</div>
     </div>
 
@@ -1263,7 +1368,7 @@
     
 
     <div class="screenshot">
-      <img src="screenshots/19-次卡售卖包.png" alt="次卡管理">
+      <img src="19-次卡售卖包.png" alt="次卡管理">
       <div class="screenshot-caption">图 9-2：次卡管理 — 商品组合与定价配置</div>
     </div>
     <div class="tip"><strong>图中关键操作点：</strong>① 「售卖包类型」选择「固定包」（预设组合）或「自由组合包」（用户自选）；② 「原价」为划线展示价，用于凸显优惠力度；③ 固定包可设库存上限，自由组合包不限库存。</div>
@@ -1318,7 +1423,7 @@
     
 
     <div class="screenshot">
-      <img src="screenshots/优惠券管理.png" alt="优惠券管理">
+      <img src="优惠券管理.png" alt="优惠券管理">
       <div class="screenshot-caption">图 10-1：优惠券管理 — 优惠规则与适用范围配置</div>
     </div>
     <div class="tip"><strong>图中关键操作点：</strong>① 「优惠方式」支持满减/直减/折扣比例三种；② 「适用范围」可精确限制到具体城市、门店、教室或排课；③ 开启「赠送好友可用」可支持裂变传播。</div>
@@ -1342,7 +1447,7 @@
       </div>
     </div>
     <div class="screenshot">
-      <img src="screenshots/21-会籍卡发放策略.png" alt="会籍卡与客服快速发卡">
+      <img src="21-会籍卡发放策略.png" alt="会籍卡与客服快速发卡">
       <div class="screenshot-caption">图 11-1：会籍卡管理与客服快速发卡</div>
     </div>
 
@@ -1389,7 +1494,7 @@
       </div>
     </div>
     <div class="screenshot">
-      <img src="screenshots/22-运营位管理.png" alt="新增运营位">
+      <img src="22-运营位管理.png" alt="新增运营位">
       <div class="screenshot-caption">图 12-1：运营位管理 — 新增运营位配置</div>
     </div>
 
@@ -1408,7 +1513,7 @@
     
 
     <div class="screenshot">
-      <img src="screenshots/23-运营位详情.png" alt="运营位入口">
+      <img src="23-运营位详情.png" alt="运营位入口">
       <div class="screenshot-caption">图 12-2：运营位入口 — 前端展示效果</div>
     </div>
     <div class="tip"><strong>图中关键操作点：</strong>① 运营位入口展示在小程序首页或指定页面；② 用户点击后按配置的「跳转类型」进入对应页面（公众号/小程序页面/H5）；③ 运营位支持按城市、门店、教室定向投放。</div>
@@ -1453,7 +1558,7 @@
     
 
     <div class="screenshot">
-      <img src="screenshots/权限管理.png" alt="权限管理">
+      <img src="权限管理.png" alt="权限管理">
       <div class="screenshot-caption">图 14-1：权限管理 — 角色与菜单权限配置</div>
     </div>
     <div class="tip"><strong>图中关键操作点：</strong>① 选择角色（系统管理员/运营/客服/财务等）控制可访问模块；② 「菜单权限」决定能看到哪些页面；③ 「操作权限」决定能执行哪些敏感操作（如退款、卡券发放）。</div>
@@ -1549,7 +1654,7 @@
   <!-- Footer -->
   <section class="section" style="text-align:center; padding: 40px; color: var(--text-muted); border-top: 1px solid var(--border);">
     <p>— 本手册由 SAVAGE 运营团队维护 —</p>
-    <p style="font-size: 13px; margin-top: 8px;">最后更新：2026-06-09 | 版本 v1.2 | 共 14 个核心场景 |  | <a href="#feedback">提交反馈</a></p>
+    <p style="font-size: 13px; margin-top: 8px;">最后更新：2026-07-07 | 版本 v1.3 | 共 15 个核心场景 |  | <a href="#feedback">提交反馈</a></p>
   </section>
 
 </main>
